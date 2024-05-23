@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+        <div class="main-content">
+            <header>
+                <img class="imageHeader" src="mae-mu-1CepXNIjP7Q-unsplash.jpg" alt="">
+                <img class="logoHeader" src="—Pngtree—burger logo design template_3588476.jpg" alt="">
+                <div class="textoPorCima">
+                <h1 class="h1Header">Mozed Hamburgueria</h1>
+                <h2 class="h2Header">📌 Raul Veiga São Gonçalo - RJ</h2>
+                <button class="btn-verde">Aberto🕗</button>
+                <h3 class="h3Header">De Segunda a Domingo das 19:00 às 03:00</h3>
+                </div>
+            </header>
+            </header>
+            <section id="entradas">
+                <h2 class="blackLine">Hambúrgueres</h2>
+                <ul>
+                    <li>
+                        <h3>Duplo cheeseburger com bacon</h3>
+                        <span>R$ 15,00</span>
+                        <input type="number" id="duplocheeseburgercombacon" value="1" min="1">
+                        <button onclick="addItem('Duplo cheeseburger com bacon', 20, document.getElementById('duplocheeseburgercombacon').value)">Adicionar</button>
+                    </li>
+                    <li>
+                        <h3>X-tudo completo</h3>
+                        <span>R$ 12,00</span>
+                        <input type="number" id="x-tudocompleto" value="1" min="1">
+                        <button onclick="addItem('X-tudo completo', 20, document.getElementById('x-tudocompleto').value)">Adicionar</button>
+                    </li>
+                    <li>
+                        <h3>X-egg</h3>
+                        <span>R$ 9,00</span>
+                        <input type="number" id="x-egg" value="1" min="1">
+                        <button onclick="addItem('X-egg', 20, document.getElementById('x-egg').value)">Adicionar</button>
+                    </li>
+                    <li>
+                        <h3>Cheeseburger triplo</h3>
+                        <span>R$ 17,00</span>
+                        <input type="number" id="cheeseburgertriplo" value="1" min="1">
+                        <button onclick="addItem('Cheeseburger triplo', 20, document.getElementById('cheeseburgertriplo').value)">Adicionar</button>
+                    </li>
+                    <li>
+                        <h3>X-salada</h3>
+                        <span>R$ 11,00</span>
+                        <input type="number" id="x-salada" value="1" min="1">
+                        <button onclick="addItem('X-salada', 20, document.getElementById('x-salada').value)">Adicionar</button>
+                    </li>
+                    <li>
+                        <h3>Cheeseburger simples</h3>
+                        <span>R$ 12,00</span>
+                        <input type="number" id="cheeseburguersimples" value="1" min="1">
+                        <button onclick="addItem('Cheeseburger simples', 20, document.getElementById('cheeseburguersimples').value)">Adicionar</button>
+                    </li>
+                    <!-- Adicione mais itens aqui -->
+                </ul>
+            </section>
+            
+            </section>
+        </div>
+    </header>
+    <main>
+        
+    </main>
+    <footer>
+        <button id="sendOrder" onclick="sendOrder()">Enviar Pedido via WhatsApp</button>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+*{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    font-family: Georgia, serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0,0,0, 0.1);
+    
+    
+}
+
+.h1Header {
+    text-align: center;
+    position: relative;
+    bottom: 250px;
+    color: #ffff;
+    font-weight: bolder;
+    letter-spacing: 3px;
+    top: 50%;
+    font-size: 2.5em;
+    text-shadow: 5px 5px 3px rgba(0, 0, 0, 1.5);
+}
+
+.h2Header {
+    text-align: center;
+    position: relative;
+    bottom: 250px;
+    color: #ffff;
+    top: 50%;
+    font-size: 1.5rem;
+    text-shadow: 3px 5px 3px rgba(0, 0, 0, 1.5);
+}
+
+.h3Header {
+    text-align: center;
+    position: relative;
+    bottom: 50px;
+    color: #ffff;
+    font-weight: bolder;
+    letter-spacing: 3px;
+    top: 50%;
+    text-shadow: 5px 5px 3px rgba(0, 0, 0, 1.5);
+}
+
+.textoPorCima {
+    margin-top: -41%;
+}
+
+.imageHeader {
+    width: 100%;
+    max-width: 980px;
+    height: 475px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: 50%;
+    display: block;
+}
+
+.logoHeader {
+   position: relative;
+   width: 15%;
+   left: 42%;
+   bottom: 460px;
+}
+
+main {
+    margin: 2rem;
+}
+
+.btn-verde {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px; 
+    font-family: Arial, sans-serif; 
+    border-radius: 8px; 
+    transition: background-color 0.3s ease; 
+    cursor: pointer;
+    bottom: 60px;
+    position: relative;
+    left: 39%;
+}
+
+.btn-verde:hover {
+    background-color: #45a049;
+}
+
+.btn-verde:focus {
+    outline: none; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.blackLine {
+    color: #000000;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 0.5rem;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: rgba(0,0,0, 0.1);;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 2px rgba(0,0,0,1.0);
+}
+
+li h3 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+li p {
+    font-size: .95rem;
+    text-align: left;
+    letter-spacing: .01em;
+    font-weight: 300;
+    word-break: break-word;
+    text-transform: lowercase;
+    color: #444;
+}
+
+li span {
+    padding: 6px;
+    border-radius: 2px;
+    background-color: rgba(0,0,0,0);
+    max-width: 80px;
+    font-weight: bolder !important;
+    font-family: ChirpBold;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+    color: #444;
+}
+
+li input[type="number"] {
+    width: 50px;
+    margin-right: 10px;
+    color: #333;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+li button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+li button:hover {
+    background-color: #45a049;
+}
+
+footer {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+#sendOrder {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#sendOrder:hover {
+    background-color: #1ebd50;
+}
+
+.main-content {
+    font-family: Georgia, serif;
+    background-color: #ffffff; 
+    padding: 20px;
+    margin: 50px auto; /* Centralizar verticalmente */
+    max-width: 600px; /* Largura máxima */
+    border-radius: 10px; /* Cantos arredondados */
+    box-shadow: 0 0 2px rgba(0,0,0,1.0);
+}
+
+@media (max-width: 768px) {
+    .text-overlay h1 {
+        font-size: 1.5em;
+    }
+
+    .text-overlay h2 {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .text-overlay h1 {
+        font-size: 1.2em;
+    }
+
+    .text-overlay h2 {
+        font-size: 1em;
+    }
+}
