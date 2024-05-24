@@ -11,62 +11,100 @@ body {
     margin: 0;
     padding: 0;
     background-color: rgba(0,0,0, 0.1);
-    
-    
+}
+
+img {
+    border-radius: 8px;
+    background-size: cover;
+}
+
+.textoPorCima{
+    display: flex;
+    position: relative;
+    left: 25%;
 }
 
 .h1Header {
-    text-align: center;
-    position: relative;
-    bottom: 250px;
-    color: #ffff;
-    font-weight: bolder;
-    letter-spacing: 3px;
-    top: 50%;
-    font-size: 2.5em;
-    text-shadow: 5px 5px 3px rgba(0, 0, 0, 1.5);
+
 }
 
 .h2Header {
-    text-align: center;
-    position: relative;
-    bottom: 250px;
-    color: #ffff;
-    top: 50%;
-    font-size: 1.5rem;
-    text-shadow: 3px 5px 3px rgba(0, 0, 0, 1.5);
+
 }
 
 .h3Header {
-    text-align: center;
-    position: relative;
-    bottom: 50px;
-    color: #ffff;
-    font-weight: bolder;
-    letter-spacing: 3px;
-    top: 50%;
-    text-shadow: 5px 5px 3px rgba(0, 0, 0, 1.5);
-}
-
-.textoPorCima {
-    margin-top: -41%;
 }
 
 .imageHeader {
-    width: 100%;
-    max-width: 980px;
-    height: 475px;
+    width: 1152px;
+    max-width: 1152px;
+    height: 172px;
     overflow: hidden;
     background-size: cover;
     background-position: 50%;
-    display: block;
+    display: flex;
+    align-items: center;
+
+}
+
+.alignImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .logoHeader {
-   position: relative;
-   width: 15%;
-   left: 42%;
-   bottom: 460px;
+    height: 132px;
+    width: 132px;
+    top: 125px;
+    left: 175px;
+    position: absolute;
+    border-radius: 8px;
+}
+
+.mainLogo{
+    display: flex;
+}
+
+.info {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    left: 5px;
+    top: 10px;
+}
+
+.share {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    left: 10px;
+    top: 10px;
+}
+
+.buttonVerMapa {
+    position: relative;
+    left: 25%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 16px; 
+    font-family: Arial, sans-serif; 
+    border-radius: 8px; 
+    transition: background-color 0.3s ease; 
+    cursor: pointer;
+    position: relative;
+}
+
+.buttonVerMapa:hover {
+    background-color: #45a049;
+}
+
+.estiloButton {
+    height: 32px;
+    padding: 8px 12px;
 }
 
 main {
@@ -100,23 +138,18 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.blackLine {
-    color: #000000;
-    border-bottom: 2px solid #000000;
-    padding-bottom: 0.5rem;
-}
-
 ul {
     list-style-type: none;
-    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    width: 1000px;
 }
 
 li {
-    background-color: rgba(0,0,0, 0.1);;
-    margin: 1rem 0;
-    padding: 1rem;
     border-radius: 5px;
-    box-shadow: 0 0 2px rgba(0,0,0,1.0);
+    box-shadow: 0 0 1px rgba(0,0,0,1.0);
 }
 
 li h3 {
@@ -178,6 +211,25 @@ footer {
     margin: 2rem 0;
 }
 
+.gridItens{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.gridProducts {
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: center;
+}
+
+.entradas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #sendOrder {
     background-color: #4CAF50;
     color: white;
@@ -196,10 +248,6 @@ footer {
 .main-content {
     font-family: Georgia, serif;
     background-color: #ffffff; 
-    padding: 20px;
-    margin: 50px auto; /* Centralizar verticalmente */
-    max-width: 600px; /* Largura máxima */
-    border-radius: 10px; /* Cantos arredondados */
     box-shadow: 0 0 2px rgba(0,0,0,1.0);
 }
 
