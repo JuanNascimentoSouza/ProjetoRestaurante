@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Online</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Freeman&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-content">
+        
+        <header class="mainHeader">
+            <div class="alignImage">
+                <img class="imageHeader" src="Sem título.png" alt="">
+            </div>
+            <div class="mainLogo">
+                <img class="logoHeader" src="—Pngtree—burger logo design template_3588476.jpg" alt="">
+            </div>
+            <div class="textoPorCima">
+                <h1 class="h1Header">Mozed Hamburgueria</h1>
+                <img class="info" src="icons8-info-50.png"></img>
+                <img class="share" src="icons8-share-48.png" alt="">
+            </div>
+            <div class="estiloButton">
+                <button class="buttonVerMapa">📌Ver mapa</button>
+            </div>
+        </header>
+        <section class="entradas">
+            <div class="link-container">
+                <a href="#hamburgueres" class="menu-link">Hamburgueres</a>
+                <a href="#pizza" class="menu-link">Pizzas</a>
+                <a href="#batata_frita" class="menu-link">Batata-frita</a>
+                <a href="#bebidas" class="">Bebidas</a>
+            </div>
+
+            <h2 id="hamburgueres">Hamburgueres</h2>
+            <ul class="displayFlexUl">
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Duplo cheeseburger com bacon</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 15,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Duplo cheeseburger com bacon', 15)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-tudo completo</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 12,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-tudo completo', 12)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-egg</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 9,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-egg', 9)">Adicionar</button> 
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Cheeseburger triplo</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 17,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Cheeseburger triplo', 17)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-salada</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 11,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-salada', 11)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Cheeseburger simples</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 12,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Cheeseburger simples', 12)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <h2 id="pizza">Pizzas</h2>
+            <ul class="displayFlexUl">
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Duplo cheeseburger com bacon</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 15,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Duplo cheeseburger com bacon', 15)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-tudo completo</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 12,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-tudo completo', 12)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-egg</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 9,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-egg', 9)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Cheeseburger triplo</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 17,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Cheeseburger triplo', 17)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-salada</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 11,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-salada', 11)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Cheeseburger simples</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 12,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Cheeseburger simples', 12)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <h2 id="batata_frita">Batata-Frita</h2>
+            <ul class="displayFlexUl">
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Duplo cheeseburger com bacon</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 15,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Duplo cheeseburger com bacon', 15)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-tudo completo</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 12,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-tudo completo', 12)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-egg</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 9,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-egg', 9)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Cheeseburger triplo</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 17,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Cheeseburger triplo', 17)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-salada</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 11,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-salada', 11)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Cheeseburger simples</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 12,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Cheeseburger simples', 12)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <h2 id="bebidas">Bebidas</h2>
+            <ul class="displayFlexUl">
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Duplo cheeseburger com bacon</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 15,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Duplo cheeseburger com bacon', 15)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-tudo completo</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 12,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-tudo completo', 12)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-egg</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 9,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-egg', 9)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Cheeseburger triplo</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 17,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Cheeseburger triplo', 17)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>X-salada</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 11,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('X-salada', 11)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="gridProducts">
+                    <img class="gridProductsImage" src="Semtítulo2.png" alt="">
+                    <div>
+                        <h3>Cheeseburger simples</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="gridProductsSpace">
+                            <span>R$ 12,00</span>
+                            <button class="botaoAdicionar" onclick="addItem('Cheeseburger simples', 12)">Adicionar</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Repetição para outras seções -->
+            
+        </section>
+    </div>
+    
+    <footer>
+        <button id="sendOrder" onclick="sendOrder()">Enviar Pedido via WhatsApp</button>
+        
+        <img id="openCartButton" src="icons8-cart-64.png" alt="carrinho" onmouseover="hoverImage()" onmouseout="normalImage()" onclick="openCartPopup()">
+        
+    </footer>
+
+    <!-- Popup do carrinho -->
+    <div id="cartPopup" class="cart-popup" style="display: none;">
+        <div class="cart-popup-content">
+            <span id="closeCartPopup" class="close">&times;</span>
+            <h2>Carrinho de Compras</h2>
+            <ul id="cartItems"></ul>
+            <p id="cartTotal">Total: R$ 0,00</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
