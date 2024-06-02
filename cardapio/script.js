@@ -95,4 +95,3 @@ for (var i = 0; i < buttons.length; i++) {
         }, 3000); // 3000 milissegundos = 3 segundos
     });
 }
-

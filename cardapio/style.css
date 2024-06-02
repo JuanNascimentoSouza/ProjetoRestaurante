@@ -1,42 +1,50 @@
-* {
+
+*{
     font-family: "Freeman", sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: #F1F1F1;
+
 }
 
 body {
+    
+    
     padding: 0;
 }
 
 img {
     border-radius: 8px;
     background-size: cover;
-    max-width: 100%;
 }
 
-.textoPorCima {
+.textoPorCima{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     position: relative;
-    margin-top: 1rem;
+    left: 25%;
 }
 
 .h1Header {
-    text-align: center;
+    position: relative;
+    left: 126px;
+
 }
 
+
+
+
+
 .imageHeader {
-    width: 80%;
-    height: auto;
-    max-height: 172px;
+    width: 1152px;
+    max-width: 1152px;
+    height: 172px;
     overflow: hidden;
     background-size: cover;
     background-position: 50%;
     display: flex;
     align-items: center;
+
 }
 
 .alignImage {
@@ -48,38 +56,47 @@ img {
 .logoHeader {
     height: 142px;
     width: 142px;
+    top: 130px;
+    left: 423px;
     position: absolute;
     border-radius: 8px;
     z-index: 1;
-    top: 3%;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
-.mainLogo {
+.mainLogo{
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-.info, .share {
+.info {
     width: 32px;
     height: 32px;
-    margin: 0 8px;
+    position: relative;
+    left: 134px;
+    top: 10px;
+}
+
+.share {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    left: 138px;
+    top: 10px;
 }
 
 .buttonVerMapa {
+    position: relative;
+    left: 580px;
     background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 10px;
     text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+    font-size: 16px; 
+    
+    border-radius: 8px; 
+    transition: background-color 0.3s ease; 
     cursor: pointer;
     position: relative;
-    margin-top: 10px;
 }
 
 .buttonVerMapa:hover {
@@ -87,25 +104,8 @@ img {
 }
 
 .estiloButton {
-    display: flex;
-    justify-content: center;
-    margin-top: -5px;
-}
-
-.link-container {
-    margin-top: 45px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    border: 1px solid rgb(221, 221, 221);
-    padding: 3px 35px;
-    border-radius: 8px;
-}
-
-#hamburgueres {
-    position: relative;
-    right: 0px;
-    margin-top: 55px;
+    height: 32px;
+    padding: 8px 12px;
 }
 
 main {
@@ -120,13 +120,14 @@ main {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+    font-size: 16px; 
+    
+    border-radius: 8px; 
+    transition: background-color 0.3s ease; 
     cursor: pointer;
+    bottom: 60px;
     position: relative;
-    margin: 2rem auto;
-    display: block;
+    left: 39%;
 }
 
 .btn-verde:hover {
@@ -134,7 +135,7 @@ main {
 }
 
 .btn-verde:focus {
-    outline: none;
+    outline: none; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -144,28 +145,22 @@ main {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     padding: 20px;
-    max-width: 100%;
-    margin: 0 auto;
+    width: 1000px;
 }
 
-@media (max-width: 768px) {
-    .displayFlexUl {
-        grid-template-columns: 1fr;
-    }
-}
+
 
 li {
     border-radius: 5px;
     box-shadow: 0 0 1px rgba(0,0,0,1.0);
-    padding: 20px;
-    background-color: white;
 }
 
 li h3 {
+    
     text-transform: uppercase;
     line-height: 22px;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 400 bolder;
     font-size: 16px;
     text-align: center;
 }
@@ -173,8 +168,11 @@ li h3 {
 li p {
     font-size: 12px;
     line-height: 1.2 !important;
+    line-break: anywhere;
     text-align: left;
     font-weight: 300;
+    word-break: break-word;
+    text-transform: lowercase;
     color: #65181880;
 }
 
@@ -191,6 +189,7 @@ li input[type="number"] {
     color: #333;
     box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
 }
 
 .botaoAdicionar {
@@ -203,7 +202,6 @@ li input[type="number"] {
     margin-top: 0.5rem;
     transition: background-color 0.3s ease;
 }
-
 .botaoAdicionar.changed {
     background-color: #c2a710; /* Nova cor do botão após o clique */
 }
@@ -217,7 +215,7 @@ footer {
     margin: 2rem 0;
 }
 
-.gridItens {
+.gridItens{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
@@ -235,6 +233,8 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    
+    
 }
 
 #sendOrder {
@@ -253,8 +253,10 @@ footer {
 }
 
 .main-content {
-    background-color: #ffffff;
+    
+    background-color: #ffffff; 
     box-shadow: 0 0 2px rgba(0,0,0,1.0);
+    
 }
 
 .gridProductsSpace {
@@ -265,8 +267,6 @@ footer {
 
 .gridProductsImage {
     margin-right: 16px;
-    width: 100px;
-    height: auto;
 }
 
 @media (max-width: 768px) {
@@ -276,25 +276,6 @@ footer {
 
     .text-overlay h2 {
         font-size: 1.2em;
-    }
-
-    .buttonVerMapa {
-        width: 100%;
-        text-align: center;
-    }
-
-    .logoHeader {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        margin-bottom: 10px;
-    }
-
-    .text-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
     }
 }
 
@@ -306,36 +287,15 @@ footer {
     .text-overlay h2 {
         font-size: 1em;
     }
-
-    .text-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .displayFlexUl {
-        grid-template-columns: 1fr;
-        padding: 10px;
-    }
-
-    .gridProducts {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .gridProductsImage {
-        width: 100%;
-        height: auto;
-        margin: 0 0 10px 0;
-    }
 }
-
 a {
     font-size: 33px;
-    text-decoration: none;
-    color: black;
+    text-decoration: none; /* Remove o sublinhado */
+    color: black; /* Cor inicial dos links */
+    
 }
 
+/* Muda a cor dos links quando o mouse passa sobre eles */
 a:hover {
     color: rgb(255, 0, 0); /* Cor ao passar o mouse */
 }
@@ -402,211 +362,79 @@ a:hover {
 }
 
 #cartItems button {
-    background-color: #f44336;
+    background-color: #ff4d4d;
     color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
 }
 
 #cartItems button:hover {
-    background-color: #d32f2f;
+    background-color: #ff1a1a;
 }
 
-.cart-footer {
+#cartItems ul{
+
+    display: flex !important;
+
+}
+
+#hamburgueres{
+
+    position: relative;
+    right: 0px;
+    margin-top: 55px;
+}
+
+.link-container{
+    margin-top: 45px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
+    gap: 25px;
+    font-weight: bolder;
+    border: 1px solid rgb(221, 221, 221);
+    padding: 3px 35px;
+    border-radius: 8px;
 }
 
-.cart-total {
-    font-size: 1.2em;
-    font-weight: bold;
+#pizza{
+
+    position: relative;
+    right: 0px;
+    
 }
 
-.cart-buttons {
-    display: flex;
-    gap: 10px;
+#batata_frita{
+
+    position: relative;
+    right: 0px;
+   
 }
 
-.cart-buttons button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
+#bebidas{
+
+    position: relative;
+    right: 0px;
+  
+}
+
+#openCartButton {
+
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    height: 60px;
+    position: relative;
+    top: 21px;
+    left: 28px;
+    
+
 }
 
-.cart-buttons button:hover {
-    background-color: #45a049;
+.menu-link{
+
+    border-right: 1px solid #ddd;
+    padding-right: 29px;
+    padding-left: 1px;
+    
+    
 }
 
-@media (max-width: 320px) {
-    .logoHeader {
-        width: 100px;
-        height: 100px;
-    }
-
-    .buttonVerMapa, .btn-verde {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .displayFlexUl {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    li {
-        padding: 15px;
-    }
-
-    .link-container {
-        display: flex;
-        flex-direction: column;
-    }
-}
-
-
-@media (max-width: 480px) and (orientation: landscape) {
-    .logoHeader {
-        width: 120px;
-        height: 120px;
-    }
-
-    .text-overlay h1, .text-overlay h2 {
-        font-size: 1.2em;
-    }
-
-    .displayFlexUl {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-}
-
-@media (max-width: 768px) and (orientation: portrait) {
-    .logoHeader {
-        width: 130px;
-        height: 130px;
-    }
-
-    .text-overlay h1, .text-overlay h2 {
-        font-size: 1.4em;
-    }
-
-    .displayFlexUl {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .link-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (min-width: 1024px) and (orientation: landscape) {
-    .logoHeader {
-        width: 150px;
-        height: 150px;
-        left: 25%;
-        top: 17%
-    }
-
-    .text-overlay h1, .text-overlay h2 {
-        font-size: 1.6em;
-    }
-
-    .displayFlexUl {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .link-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (min-width: 1366px) {
-
-    .logoHeader {
-        width: 180px;
-        height: 180px;
-        width: 180px;
-        height: 180px;
-        left: 30%;
-        top: 6%;
-    }
-
-    .text-overlay h1, .text-overlay h2 {
-        font-size: 1.8em;
-    }
-
-    .displayFlexUl {
-        grid-template-columns: 1fr 1fr;
-        gap: 25px;
-    }
-
-    .btn-verde {
-        font-size: 14px;
-        padding: 12px 24px;
-    }
-}
-
-@media (min-width: 1440px) {
-    .logoHeader {
-        width: 180px;
-        height: 180px;
-        width: 180px;
-        height: 180px;
-        left: 30%;
-        top: 6%;
-    }
-
-    .text-overlay h1, .text-overlay h2 {
-        font-size: 2em;
-    }
-
-    .displayFlexUl {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-    }
-
-    li {
-        padding: 25px;
-    }
-}
-
-@media (min-width: 1920px) {
-    .logoHeader {
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        left: 34%;
-        top: 5%;
-    }
-
-    .text-overlay h1, .text-overlay h2 {
-        font-size: 2.2em;
-    }
-
-    .displayFlexUl {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 35px;
-    }
-
-    li {
-        padding: 30px;
-    }
-}
