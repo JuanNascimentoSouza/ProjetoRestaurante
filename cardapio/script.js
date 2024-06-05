@@ -95,3 +95,48 @@ for (var i = 0; i < buttons.length; i++) {
         }, 3000); // 3000 milissegundos = 3 segundos
     });
 }
+var botoesAdicionar = document.getElementsByClassName('botaoAdicionar');
+for(var i = 0; i < botoesAdicionar.length; i++) {
+    botoesAdicionar[i].addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+}
+
+
+
+window.addEventListener('scroll', function() {
+    var stickyElement = document.getElementById('stickyElement');
+    var stickyContainer = document.querySelector('.sticky-container');
+    var stickyContainerOffset = stickyContainer.offsetTop;
+    
+    if (window.pageYOffset >= stickyContainerOffset) {
+        stickyElement.classList.add('sticky');
+    } else {
+        stickyElement.classList.remove('sticky');
+    }
+});
+
+
+
+
+
+function openItemDetails(name, price, image, description) {
+    var modal = document.getElementById("itemModal");
+    document.getElementById("itemName").innerText = name;
+    document.getElementById("itemPrice").innerText = price;
+    document.getElementById("itemImage").src = image; // Adiciona a imagem ao modal
+    document.getElementById("itemDescription").innerText = description; // Adiciona a descrição ao modal
+    document.getElementById("addToCartButton").onclick = function() {
+        addItem(name, price);
+        modal.style.display = "none";
+    };
+    modal.style.display = "block";
+    document.getElementsByClassName("close")[0].onclick = function() {
+        modal.style.display = "none";
+    };
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+}
