@@ -60,7 +60,7 @@ function sendOrder() {
 
     message += `\nTotal: R$ ${total.toFixed(2)}`;
 
-    const whatsappNumber = "5521999999999";
+    const whatsappNumber = "5521966454694";
     const encodedMessage = encodeURIComponent(message);
     const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
     
@@ -103,6 +103,43 @@ for(var i = 0; i < botoesAdicionar.length; i++) {
 }
 
 
+// Seleciona todos os elementos com a classe 'share' e adiciona o evento de clique a cada um
+var buttons = document.getElementsByClassName('share');
+
+// Itera sobre todos os elementos com a classe 'share'
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function() {
+        var button = this;
+        button.textContent = 'Adicionado ao carrinho'; // Altera o texto do botão para "Adicionado"
+        button.classList.add('changed'); // Adiciona a classe para alterar a cor do botão
+
+        setTimeout(function() {
+            button.textContent = 'Adicionar'; // Retorna o texto do botão para "Clique aqui"
+            button.classList.remove('changed'); // Remove a classe após 3 segundos
+        }, 3000); // 3000 milissegundos = 3 segundos
+    });
+}
+var botoesAdicionar = document.getElementsByClassName('share');
+for(var i = 0; i < botoesAdicionar.length; i++) {
+    botoesAdicionar[i].addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+}
+
+// script.js
+document.addEventListener('DOMContentLoaded', (event) => {
+    const messageElement = document.getElementById('message');
+    
+    // Define o tempo em milissegundos (4000 ms = 4 segundos)
+    const tempoDesaparecer = 4100; 
+
+    // Define um temporizador para esconder o parágrafo após o tempo especificado
+    setTimeout(() => {
+        messageElement.style.display = 'none';
+    }, tempoDesaparecer);
+});
+
+
 
 window.addEventListener('scroll', function() {
     var stickyElement = document.getElementById('stickyElement');
@@ -140,3 +177,32 @@ function openItemDetails(name, price, image, description) {
         }
     };
 }
+
+// script.js
+document.getElementById('copyImage').addEventListener('click', function() {
+    // Obtém a URL atual
+    const url = window.location.href;
+    
+    // Cria um elemento temporário de input
+    const tempInput = document.createElement('input');
+    tempInput.style.position = 'absolute';
+    tempInput.style.left = '-9999px';
+    tempInput.value = url;
+    
+    // Adiciona o input ao corpo do documento
+    document.body.appendChild(tempInput);
+    
+    // Seleciona o conteúdo do input
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+    // Copia o conteúdo selecionado para a área de transferência
+    document.execCommand('copy');
+    
+    // Remove o input temporário
+    document.body.removeChild(tempInput);
+
+    // Mostra uma mensagem de confirmação
+    const messageElement = document.getElementById('message');
+    messageElement.textContent = 'URL copiada para a área de transferência!';
+});
