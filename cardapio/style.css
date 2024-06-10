@@ -62,7 +62,19 @@ img {
     height: 32px;
     position: relative;
     left: 10px;
+    cursor: pointer;
+}
 
+.descriptionInfo {
+    font-size: 12px;
+    line-height: 1.2 !important;
+    line-break: anywhere;
+    text-align: left;
+    font-weight: 300;
+    word-break: break-word;
+    text-transform: lowercase;
+    color: #65181880;
+    text-align: center;
 }
 
 .share {
@@ -379,7 +391,9 @@ a:hover {
     
     padding-right: 0px;
     padding-left: 0px;
+    
 }
+
 
 #pizza{
 
@@ -391,7 +405,7 @@ a:hover {
     justify-content: center;
 }
 
-#batata_frita{
+#salgados{
 
     position: relative;
     right: 0px;
@@ -515,7 +529,6 @@ a:hover {
 
     background-color: #ffffff;
     margin: auto;
-    margin-top: 120px;
     padding: 0px;
     border: 2px solid rgba(0, 0, 0, 0.1);
     width: 50%;
@@ -523,7 +536,7 @@ a:hover {
     flex-direction: column;
     align-items: center;
     border-radius: 30px;
-    
+    margin-top: 30px;
 
 }
 
@@ -682,6 +695,10 @@ span.close {
     transition: none 0.3s ease;
 }
 
+.testeDiv {
+    display: flex;
+}
+
 @media (min-width: 1px) and (max-width: 320px) {
 
     .logoHeader {
@@ -742,11 +759,12 @@ span.close {
 
     .link-container {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         border-radius: 11px;
         padding: 5px;
         border: 0px solid #ddd;
         margin-top: 2px;
+        justify-items: center;
     }
 
 }
