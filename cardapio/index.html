@@ -63,7 +63,7 @@
 
                 <h2 id="hamburgueres">Hambúrgueres</h2>
                 <ul class="displayFlexUl">
-                <li class="gridProducts" onclick="openItemDetails('Cheeseburger duplo', 15, 'assets/duplobacon.png', 'Descrição do Duplo cheeseburger com bacon')">
+                <li class="gridProducts" onclick="openItemDetails('Cheeseburger duplo', 15, 'assets/duplobacon.png', 'Descrição do Duplo cheeseburger com bacon', 'teste', 'teste2')">
                     <img class="gridProductsImage" src="assets/duplobacon.png" alt="">
                     <div>
                         <h3>Cheeseburger duplo</h3>
@@ -76,7 +76,7 @@
                 </li>
 
                       
-                <li class="gridProducts" onclick="openItemDetails('Cheeseburger triplo', 12, 'assets/triplobacon.png', 'Descrição do X-tudo completo')">
+                <li class="gridProducts" onclick="openItemDetails('Cheeseburger triplo', 12, 'assets/triplobacon.png', 'Descrição do X-tudo completo',null,null)">
                     <img class="gridProductsImage" src="assets/triplobacon.png" alt="">
                     <div>
                         <h3>Cheeseburger triplo</h3>
@@ -89,7 +89,7 @@
                 </li>
 
 
-                <li class="gridProducts" onclick="openItemDetails('Cheeseburger quádruplo', 12, 'assets/quartobacon.png', 'Descrição do X-tudo completo')">
+                <li class="gridProducts" onclick="openItemDetails('Cheeseburger quádruplo', 12, 'assets/quartobacon.png', 'Descrição do X-tudo completo','teste3', 'teste4')">
                     <img class="gridProductsImage" src="assets/quartobacon.png" alt="">
                     <div>
                         <h3>Cheeseburger quádruplo</h3>
@@ -400,13 +400,11 @@
                 
                 <h1 id="itemName"></h1>
                 <p id="itemDescription">Descrição do item</p>
-                <div class="testeDiv">
-                    <h2>Adicional</h2>
-                    <input type='number' id='quantity' name='quantity' min='1' max='10'>
-                </div>
-                <p>Descrição</p>
-                <div class="popupSpaceBetween">
-
+                
+                <!-- <input type='number' id='quantity' name='quantity' min='1' max='10'> -->
+                <h3 id="itemQuantity"></h3>
+                <input id="itemAdditional" type="number" min="1" max="2">    
+                    <div class="popupSpaceBetween">
                         <p class="namePrice">Preço: R$ <span id="itemPrice"></span></p>
                         <button id="addToCartButton">Adicionar ao carrinho</button>
 

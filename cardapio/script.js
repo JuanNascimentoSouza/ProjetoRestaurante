@@ -155,12 +155,16 @@ window.addEventListener('scroll', function() {
 
 
 
-function openItemDetails(name, price, image, description) {
+
+
+function openItemDetails(name, price, image, description, additional, quantity) {
     var modal = document.getElementById("itemModal");
     document.getElementById("itemName").innerText = name;
     document.getElementById("itemPrice").innerText = price;
     document.getElementById("itemImage").src = image; // Adiciona a imagem ao modal
     document.getElementById("itemDescription").innerText = description; // Adiciona a descrição ao modal
+    document.getElementById("itemAdditional").innerText = additional;
+    document.getElementById("itemQuantity").innerText = quantity;
     document.getElementById("addToCartButton").onclick = function() {
         addItem(name, price);
         modal.style.display = "none";
@@ -175,14 +179,22 @@ function openItemDetails(name, price, image, description) {
         }
     };
 
-    // Fecha a janela de popup da parte dos hamburgueres
-    document.getElementById('closeItem').addEventListener('click', function() {
-        document.getElementById('itemModal').style.display = 'none';
-    });
+        // Condicional para adicionar elemento adicional
+        if (additional) {
+            document.getElementById("itemAdditional").innerText = additional;
+            document.getElementById("itemAdditional").style.display = 'block';
+        } else {
+            document.getElementById("itemAdditional").style.display = 'none';
+        }
     
+        // Condicional para adicionar elemento quantidade
+        if (quantity) {
+            document.getElementById("itemQuantity").innerText = quantity;
+            document.getElementById("itemQuantity").style.display = 'block';
+        } else {
+            document.getElementById("itemQuantity").style.display = 'none';
+        };
 }
-
-
 
 // Abre o popup de informações
 document.getElementById('infoPopup').addEventListener('click', function() {
@@ -200,7 +212,6 @@ window.addEventListener('click', function(event) {
         document.getElementById('infoModal').style.display = 'none';
     }
 });
-
 
 
 // script.js
