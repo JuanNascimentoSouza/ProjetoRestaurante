@@ -63,20 +63,20 @@
 
                 <h2 id="hamburgueres">Hambúrgueres</h2>
                 <ul class="displayFlexUl">
-                <li class="gridProducts" onclick="openItemDetails('Cheeseburger duplo', 15, 'assets/duplobacon.png', 'Descrição do Duplo cheeseburger com bacon', 'teste', 'teste2')">
-                    <img class="gridProductsImage" src="assets/duplobacon.png" alt="">
-                    <div>
-                        <h3>Cheeseburger duplo</h3>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        <div class="gridProductsSpace">
-                            <span>R$ 15,00</span>
-                            <button class="botaoAdicionar" id="botaoAdicionar" onclick="addItem('Cheeseburger duplo', 15)">Adicionar</button>
+                    <li class="gridProducts" onclick="openItemDetails('Cheeseburger duplo', 15, 'assets/duplobacon.png', 'Descrição do Duplo cheeseburger com bacon', 'Adicional pro pai', 1.50)">
+                        <img class="gridProductsImage" src="assets/duplobacon.png" alt="">
+                        <div>
+                            <h3>Cheeseburger duplo</h3>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            <div class="gridProductsSpace">
+                                <span>R$ 15,00</span>
+                                <button class="botaoAdicionar" id="botaoAdicionar" onclick="addItem('Cheeseburger duplo', 15)">Adicionar</button>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
 
                       
-                <li class="gridProducts" onclick="openItemDetails('Cheeseburger triplo', 12, 'assets/triplobacon.png', 'Descrição do X-tudo completo',null,null)">
+                <li class="gridProducts" onclick="openItemDetails('Cheeseburger triplo', 12, 'assets/triplobacon.png', 'Descrição do X-tudo completo',null, 1.00)">
                     <img class="gridProductsImage" src="assets/triplobacon.png" alt="">
                     <div>
                         <h3>Cheeseburger triplo</h3>
@@ -400,15 +400,18 @@
                 
                 <h1 id="itemName"></h1>
                 <p id="itemDescription">Descrição do item</p>
-                
-                <!-- <input type='number' id='quantity' name='quantity' min='1' max='10'> -->
-                <h3 id="itemQuantity"></h3>
-                <input id="itemAdditional" type="number" min="1" max="2">    
-                    <div class="popupSpaceBetween">
-                        <p class="namePrice">Preço: R$ <span id="itemPrice"></span></p>
-                        <button id="addToCartButton">Adicionar ao carrinho</button>
-
+                    <div class="inputStylePopup">
+                        <h3 id="itemAddicionalDescription"></h3>
+                        <button class="buttonMinus"><img src="assets/icons8-minus-50.png" alt=""></button>
+                        <input id="itemAdditional" class="inputPopup" disabled type="number" min="0" max="2">
+                        <button class="buttonPlus"><img src="assets/icons8-plus-50.png" alt=""></button>
+                        <p id="additionalPrice" class="additionalPriceStyle"></p>
                     </div>
+                <div class="popupSpaceBetween">
+                    <p class="namePrice">Preço: R$ <span id="itemPrice"></span></p>
+                    <button id="addToCartButton">Adicionar ao carrinho</button>
+
+                </div>
             </div>
         </div>
             

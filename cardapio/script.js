@@ -1,9 +1,16 @@
 let order = [];
 
-function addItem(name, price) {
+function addItem(name, price, additional, additionalPrice) {
     const quantity = 1;
-    order.push({ name, price, quantity });
-    
+    const item = { name, price, quantity };
+
+    if (additional) {
+        item.additional = additional;
+        item.additionalQuantity = parseInt(document.getElementById('itemAdditional').value);
+        item.additionalPrice = additionalPrice;
+    }
+
+    order.push(item);
 }
 
 function updateCart() {
@@ -21,6 +28,16 @@ function updateCart() {
             ${item.quantity} x ${item.name}: R$ ${itemTotal.toFixed(2)}
             <button onclick="removeItem(${index})">Remover</button>
         `;
+
+        if (item.additional) {
+            const additionalTotal = item.additionalPrice * item.additionalQuantity;
+            total += additionalTotal;
+            listItem.innerHTML += `
+                <br>
+                + ${item.additionalQuantity} x ${item.additional}: R$ ${additionalTotal.toFixed(2)}
+            `;
+        }
+
         cartItemsElement.appendChild(listItem);
     });
 
@@ -56,6 +73,12 @@ function sendOrder() {
         const itemTotal = item.price * item.quantity;
         message += `- ${item.quantity} x ${item.name}: R$ ${itemTotal.toFixed(2)}\n`;
         total += itemTotal;
+
+        if (item.additional) {
+            const additionalTotal = item.additionalPrice * item.additionalQuantity;
+            message += `  + ${item.additionalQuantity} x ${item.additional}: R$ ${additionalTotal.toFixed(2)}\n`;
+            total += additionalTotal;
+        }
     });
 
     message += `\nTotal: R$ ${total.toFixed(2)}`;
@@ -63,15 +86,13 @@ function sendOrder() {
     const whatsappNumber = "5521966454694";
     const encodedMessage = encodeURIComponent(message);
     const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-    
+
     window.open(whatsappLink, '_blank');
 }
 
-// Adicionando event listeners para abrir e fechar o popup
 document.getElementById('openCartButton').addEventListener('click', openCartPopup);
 document.getElementById('closeCartPopup').addEventListener('click', closeCartPopup);
 
-// Fechar o popup quando clicar fora dele
 window.onclick = function(event) {
     const cartPopup = document.getElementById('cartPopup');
     if (event.target === cartPopup) {
@@ -79,121 +100,93 @@ window.onclick = function(event) {
     }
 };
 
-// Seleciona todos os elementos com a classe 'botaoAdicionar' e adiciona o evento de clique a cada um
-var buttons = document.getElementsByClassName('botaoAdicionar');
+document.addEventListener("DOMContentLoaded", function() {
+    const buttonMinus = document.querySelector('.buttonMinus');
+    const buttonPlus = document.querySelector('.buttonPlus');
+    const itemAdditional = document.getElementById('itemAdditional');
 
-// Itera sobre todos os elementos com a classe 'botaoAdicionar'
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function() {
-        var button = this;
-        button.textContent = 'Adicionado ao carrinho'; // Altera o texto do botão para "Adicionado"
-        button.classList.add('changed'); // Adiciona a classe para alterar a cor do botão
+    function updateAdditionalPrice() {
+        const additionalPrice = parseFloat(document.getElementById('additionalPrice').dataset.price);
+        const additionalQuantity = parseInt(itemAdditional.value);
+        const additionalTotalPrice = additionalPrice * additionalQuantity;
+        document.getElementById("additionalPrice").innerText = 'R$ ' + additionalTotalPrice.toFixed(2);
 
-        setTimeout(function() {
-            button.textContent = 'Adicionar'; // Retorna o texto do botão para "Clique aqui"
-            button.classList.remove('changed'); // Remove a classe após 3 segundos
-        }, 3000); // 3000 milissegundos = 3 segundos
-    });
-}
-var botoesAdicionar = document.getElementsByClassName('botaoAdicionar');
-for(var i = 0; i < botoesAdicionar.length; i++) {
-    botoesAdicionar[i].addEventListener('click', function(event) {
-        event.stopPropagation();
-    });
-}
-
-
-// Seleciona todos os elementos com a classe 'share' e adiciona o evento de clique a cada um
-var buttons = document.getElementsByClassName('share');
-
-// Itera sobre todos os elementos com a classe 'share'
-for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function() {
-        var button = this;
-        button.textContent = 'Adicionado ao carrinho'; // Altera o texto do botão para "Adicionado"
-        button.classList.add('changed'); // Adiciona a classe para alterar a cor do botão
-
-        setTimeout(function() {
-            button.textContent = 'Adicionar'; // Retorna o texto do botão para "Clique aqui"
-            button.classList.remove('changed'); // Remove a classe após 3 segundos
-        }, 3000); // 3000 milissegundos = 3 segundos
-    });
-}
-var botoesAdicionar = document.getElementsByClassName('share');
-for(var i = 0; i < botoesAdicionar.length; i++) {
-    botoesAdicionar[i].addEventListener('click', function(event) {
-        event.stopPropagation();
-    });
-}
-
-// script.js
-document.addEventListener('DOMContentLoaded', (event) => {
-    const messageElement = document.getElementById('message');
-    
-    // Define o tempo em milissegundos (4000 ms = 4 segundos)
-    const tempoDesaparecer = 4100; 
-
-    // Define um temporizador para esconder o parágrafo após o tempo especificado
-    setTimeout(() => {
-        messageElement.style.display = 'none';
-    }, tempoDesaparecer);
-});
-
-
-
-window.addEventListener('scroll', function() {
-    var stickyElement = document.getElementById('stickyElement');
-    var stickyContainer = document.querySelector('.sticky-container');
-    var stickyContainerOffset = stickyContainer.offsetTop;
-    
-    if (window.pageYOffset >= stickyContainerOffset) {
-        stickyElement.classList.add('sticky');
-    } else {
-        stickyElement.classList.remove('sticky');
+        // Update item price
+        const basePrice = parseFloat(document.getElementById('itemPrice').dataset.basePrice);
+        const totalPrice = basePrice + additionalTotalPrice;
+        document.getElementById('itemPrice').innerText = 'R$ ' + totalPrice.toFixed(2);
     }
+
+    buttonMinus.addEventListener('click', function() {
+        let currentValue = parseInt(itemAdditional.value);
+        if (currentValue > parseInt(itemAdditional.min)) {
+            itemAdditional.value = currentValue - 1;
+            updateAdditionalPrice();
+        }
+    });
+
+    buttonPlus.addEventListener('click', function() {
+        let currentValue = parseInt(itemAdditional.value);
+        if (currentValue < parseInt(itemAdditional.max)) {
+            itemAdditional.value = currentValue + 1;
+            updateAdditionalPrice();
+        }
+    });
 });
 
-
-
-
-
-function openItemDetails(name, price, image, description, additional, quantity) {
+function openItemDetails(name, price, image, description, additional, additionalPrice) {
     var modal = document.getElementById("itemModal");
     document.getElementById("itemName").innerText = name;
-    document.getElementById("itemPrice").innerText = price;
-    document.getElementById("itemImage").src = image; // Adiciona a imagem ao modal
-    document.getElementById("itemDescription").innerText = description; // Adiciona a descrição ao modal
-    document.getElementById("itemAdditional").innerText = additional;
-    document.getElementById("itemQuantity").innerText = quantity;
+    const itemPriceElement = document.getElementById("itemPrice");
+    itemPriceElement.innerText = 'R$ ' + price.toFixed(2);
+    itemPriceElement.dataset.basePrice = price; // Store base price in data attribute
+    document.getElementById("itemImage").src = image;
+    document.getElementById("itemDescription").innerText = description;
+
+    const additionalPriceElement = document.getElementById("additionalPrice");
+    additionalPriceElement.dataset.price = additionalPrice; // Store additional unit price in data attribute
+    additionalPriceElement.innerText = 'R$ ' + (0).toFixed(2);
+
+    const itemAdditionalElement = document.getElementById("itemAdditional");
+    const itemAdditionalDescriptionElement = document.getElementById("itemAddicionalDescription");
+    itemAdditionalElement.value = itemAdditionalElement.min; // Reset to min value
+
+    function updateAdditionalPrice() {
+        const price = additionalPrice * parseInt(itemAdditionalElement.value);
+        additionalPriceElement.innerText = 'R$ ' + price.toFixed(2);
+        
+        // Update item price
+        const basePrice = parseFloat(itemPriceElement.dataset.basePrice);
+        const totalPrice = basePrice + price;
+        itemPriceElement.innerText = 'R$ ' + totalPrice.toFixed(2);
+    }
+
+    if (additional) {
+        itemAdditionalElement.style.display = 'block';
+        itemAdditionalDescriptionElement.innerText = additional;
+        itemAdditionalDescriptionElement.style.display = 'block';
+        updateAdditionalPrice(); // Update price initially
+    } else {
+        itemAdditionalElement.style.display = 'none';
+        itemAdditionalDescriptionElement.style.display = 'none';
+    }
+
     document.getElementById("addToCartButton").onclick = function() {
-        addItem(name, price);
+        addItem(name, parseFloat(itemPriceElement.dataset.basePrice), additional, additionalPrice);
         modal.style.display = "none";
     };
+
     modal.style.display = "block";
+
     document.getElementsByClassName("close")[0].onclick = function() {
         modal.style.display = "none";
     };
+
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     };
-
-        // Condicional para adicionar elemento adicional
-        if (additional) {
-            document.getElementById("itemAdditional").innerText = additional;
-            document.getElementById("itemAdditional").style.display = 'block';
-        } else {
-            document.getElementById("itemAdditional").style.display = 'none';
-        }
-    
-        // Condicional para adicionar elemento quantidade
-        if (quantity) {
-            document.getElementById("itemQuantity").innerText = quantity;
-            document.getElementById("itemQuantity").style.display = 'block';
-        } else {
-            document.getElementById("itemQuantity").style.display = 'none';
-        };
 }
 
 // Abre o popup de informações
@@ -212,7 +205,6 @@ window.addEventListener('click', function(event) {
         document.getElementById('infoModal').style.display = 'none';
     }
 });
-
 
 // script.js
 document.getElementById('copyImage').addEventListener('click', function() {
@@ -288,6 +280,3 @@ function preloadImagens() {
 
 // Chame a função de pré-carregamento
 preloadImagens();
-
-
-

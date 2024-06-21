@@ -696,6 +696,56 @@ span.close {
     transition: none 0.3s ease;
 }
 
+.inputPopup {
+    width: 30px;
+
+}
+
+.inputStylePopup {
+    display: flex;
+    align-items: center;
+}
+
+.buttonPlus {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    background: #f3f3f3;
+    color: #606669;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}
+
+.buttonMinus {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    background: #f3f3f3;
+    color: #606669;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}
+
+.additionalPriceStyle {
+    color: var(--font-color);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+}
+
 @media (min-width: 1px) and (max-width: 320px) {
 
     .logoHeader {
