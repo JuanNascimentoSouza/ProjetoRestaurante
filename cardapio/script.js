@@ -90,32 +90,23 @@ function sendOrder() {
     window.open(whatsappLink, '_blank');
 }
 
-document.getElementById('openCartButton').addEventListener('click', openCartPopup);
-document.getElementById('closeCartPopup').addEventListener('click', closeCartPopup);
+// Certifique-se de que a função updateAdditionalPrice está definida antes de ser chamada
+function updateAdditionalPrice() {
+    const additionalPrice = parseFloat(document.getElementById('additionalPrice').dataset.price);
+    const additionalQuantity = parseInt(document.getElementById('itemAdditional').value);
+    const additionalTotalPrice = additionalPrice * additionalQuantity;
+    document.getElementById("additionalPrice").innerText = 'R$ ' + additionalTotalPrice.toFixed(2);
 
-window.onclick = function(event) {
-    const cartPopup = document.getElementById('cartPopup');
-    if (event.target === cartPopup) {
-        closeCartPopup();
-    }
-};
+    // Atualizar o preço do item
+    const basePrice = parseFloat(document.getElementById('itemPrice').dataset.basePrice);
+    const totalPrice = basePrice + additionalTotalPrice;
+    document.getElementById('itemPrice').innerText = 'R$ ' + totalPrice.toFixed(2);
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     const buttonMinus = document.querySelector('.buttonMinus');
     const buttonPlus = document.querySelector('.buttonPlus');
     const itemAdditional = document.getElementById('itemAdditional');
-
-    function updateAdditionalPrice() {
-        const additionalPrice = parseFloat(document.getElementById('additionalPrice').dataset.price);
-        const additionalQuantity = parseInt(itemAdditional.value);
-        const additionalTotalPrice = additionalPrice * additionalQuantity;
-        document.getElementById("additionalPrice").innerText = 'R$ ' + additionalTotalPrice.toFixed(2);
-
-        // Update item price
-        const basePrice = parseFloat(document.getElementById('itemPrice').dataset.basePrice);
-        const totalPrice = basePrice + additionalTotalPrice;
-        document.getElementById('itemPrice').innerText = 'R$ ' + totalPrice.toFixed(2);
-    }
 
     buttonMinus.addEventListener('click', function() {
         let currentValue = parseInt(itemAdditional.value);
@@ -134,6 +125,40 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+function hideInputs() {
+    const inputs = document.querySelectorAll('.inputPopup');
+    inputs.forEach(input => {
+        input.style.display = 'none'; // Esconde o input
+    });
+
+    const buttons = document.querySelectorAll('.buttonMinus, .buttonPlus');
+    buttons.forEach(button => {
+        button.style.display = 'none'; // Esconde os botões
+    });
+
+    const descriptions = document.querySelectorAll('#itemAddicionalDescription, #additionalPrice');
+    descriptions.forEach(description => {
+        description.style.display = 'none'; // Esconde as descrições
+    });
+}
+
+function showInputs() {
+    const inputs = document.querySelectorAll('.inputPopup');
+    inputs.forEach(input => {
+        input.style.display = 'block'; // Mostra o input
+    });
+
+    const buttons = document.querySelectorAll('.buttonMinus, .buttonPlus');
+    buttons.forEach(button => {
+        button.style.display = 'block'; // Mostra os botões
+    });
+
+    const descriptions = document.querySelectorAll('#itemAddicionalDescription, #additionalPrice');
+    descriptions.forEach(description => {
+        description.style.display = 'block'; // Mostra as descrições
+    });
+}
+
 function openItemDetails(name, price, image, description, additional, additionalPrice) {
     var modal = document.getElementById("itemModal");
     document.getElementById("itemName").innerText = name;
@@ -151,24 +176,12 @@ function openItemDetails(name, price, image, description, additional, additional
     const itemAdditionalDescriptionElement = document.getElementById("itemAddicionalDescription");
     itemAdditionalElement.value = itemAdditionalElement.min; // Reset to min value
 
-    function updateAdditionalPrice() {
-        const price = additionalPrice * parseInt(itemAdditionalElement.value);
-        additionalPriceElement.innerText = 'R$ ' + price.toFixed(2);
-        
-        // Update item price
-        const basePrice = parseFloat(itemPriceElement.dataset.basePrice);
-        const totalPrice = basePrice + price;
-        itemPriceElement.innerText = 'R$ ' + totalPrice.toFixed(2);
-    }
-
     if (additional) {
-        itemAdditionalElement.style.display = 'block';
+        showInputs(); // Mostra os inputs se houver adicionais
         itemAdditionalDescriptionElement.innerText = additional;
-        itemAdditionalDescriptionElement.style.display = 'block';
         updateAdditionalPrice(); // Update price initially
     } else {
-        itemAdditionalElement.style.display = 'none';
-        itemAdditionalDescriptionElement.style.display = 'none';
+        hideInputs(); // Esconde os inputs se não houver adicionais
     }
 
     document.getElementById("addToCartButton").onclick = function() {
@@ -188,6 +201,48 @@ function openItemDetails(name, price, image, description, additional, additional
         }
     };
 }
+
+
+
+
+
+function hideInputs() {
+    const inputs = document.querySelectorAll('.inputPopup');
+    inputs.forEach(input => {
+        input.style.display = 'none'; // Esconde o input
+    });
+
+    const buttons = document.querySelectorAll('.buttonMinus, .buttonPlus');
+    buttons.forEach(button => {
+        button.style.display = 'none'; // Esconde os botões
+    });
+
+    const descriptions = document.querySelectorAll('#itemAddicionalDescription, #additionalPrice');
+    descriptions.forEach(description => {
+        description.style.display = 'none'; // Esconde as descrições
+    });
+}
+
+function showInputs() {
+    const inputs = document.querySelectorAll('.inputPopup');
+    inputs.forEach(input => {
+        input.style.display = 'block'; // Mostra o input
+    });
+
+    const buttons = document.querySelectorAll('.buttonMinus, .buttonPlus');
+    buttons.forEach(button => {
+        button.style.display = 'block'; // Mostra os botões
+    });
+
+    const descriptions = document.querySelectorAll('#itemAddicionalDescription, #additionalPrice');
+    descriptions.forEach(description => {
+        description.style.display = 'block'; // Mostra as descrições
+    });
+}
+
+
+
+
 
 // Abre o popup de informações
 document.getElementById('infoPopup').addEventListener('click', function() {

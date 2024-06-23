@@ -395,22 +395,21 @@
         <div id="itemModal" class="modal">
 
             <div class="modal-content">
-                <span id="closeItem" class="close">x</span>
+                <span id="closeItem" class="close">&times;</span>
                 <img id="itemImage" src="" alt="Imagem do item">
                 
                 <h1 id="itemName"></h1>
                 <p id="itemDescription">Descrição do item</p>
-                    <div class="inputStylePopup">
-                        <h3 id="itemAddicionalDescription"></h3>
-                        <button class="buttonMinus"><img src="assets/icons8-minus-50.png" alt=""></button>
-                        <input id="itemAdditional" class="inputPopup" disabled type="number" min="0" max="2">
-                        <button class="buttonPlus"><img src="assets/icons8-plus-50.png" alt=""></button>
-                        <p id="additionalPrice" class="additionalPriceStyle"></p>
-                    </div>
+                <div class="inputStylePopup">
+                    <h3 id="itemAddicionalDescription"></h3>
+                    <button class="buttonMinus"><img src="assets/icons8-minus-50.png" alt=""></button>
+                    <input id="itemAdditional" class="inputPopup" disabled type="number" min="0" max="2">
+                    <button class="buttonPlus"><img src="assets/icons8-plus-50.png" alt=""></button>
+                    <p id="additionalPrice" class="additionalPriceStyle"></p>
+                </div>
                 <div class="popupSpaceBetween">
                     <p class="namePrice">Preço: R$ <span id="itemPrice"></span></p>
                     <button id="addToCartButton">Adicionar ao carrinho</button>
-
                 </div>
             </div>
         </div>
@@ -428,7 +427,7 @@
     <!-- Popup do carrinho -->
     <div id="cartPopup" class="cart-popup" style="display: none;">
         <div class="cart-popup-content">
-            <span id="closeCartPopup" class="close"></span>
+            <span id="closeCartPopup" class="close">&times;</span>
             <h2>Carrinho de Compras</h2>
             <ul id="cartItems"></ul>
             <p id="cartTotal">Total: R$ 0,00</p>
