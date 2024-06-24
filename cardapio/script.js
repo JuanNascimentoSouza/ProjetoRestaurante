@@ -13,6 +13,34 @@ function addItem(name, price, additional, additionalPrice) {
     order.push(item);
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const closeCartButton = document.getElementById('closeCartPopup');
+    const cartPopup = document.getElementById('cartPopup');
+
+    // Função para fechar o modal do carrinho
+    function closeCartPopup() {
+        cartPopup.style.display = 'none';
+    }
+
+    // Quando o usuário clicar no símbolo de fechar (×), fecha o modal do carrinho
+    closeCartButton.addEventListener('click', closeCartPopup);
+
+    // Quando o usuário clicar fora do conteúdo do modal do carrinho, fecha o modal
+    window.addEventListener('click', function(event) {
+        if (event.target == cartPopup) {
+            closeCartPopup();
+        }
+    });
+});
+
+// Exemplo de função para abrir o modal do carrinho
+function openCartPopup() {
+    const cartPopup = document.getElementById('cartPopup');
+    cartPopup.style.display = 'block';
+    updateCart();
+}
+
+// Exemplo de função para atualizar o carrinho (para referência)
 function updateCart() {
     const cartItemsElement = document.getElementById('cartItems');
     cartItemsElement.innerHTML = '';
@@ -41,19 +69,9 @@ function updateCart() {
         cartItemsElement.appendChild(listItem);
     });
 
-    document.getElementById('cartTotal').textContent = `\nTotal: R$ ${total.toFixed(2)}`;
+    document.getElementById('cartTotal').textContent = `Total: R$ ${total.toFixed(2)}`;
 }
 
-function openCartPopup() {
-    const cartPopup = document.getElementById('cartPopup');
-    cartPopup.style.display = 'block';
-    updateCart();
-}
-
-function closeCartPopup() {
-    const cartPopup = document.getElementById('cartPopup');
-    cartPopup.style.display = 'none';
-}
 
 function removeItem(index) {
     order.splice(index, 1);
@@ -104,6 +122,72 @@ function updateAdditionalPrice() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    const closeModal = document.getElementById('closeItem');
+    const modal = document.getElementById('itemModal');
+
+    // Função para fechar o modal
+    function closeModalPopup() {
+        modal.style.display = 'none';
+    }
+
+    // Quando o usuário clicar no símbolo de fechar (×), fecha o modal
+    closeModal.addEventListener('click', closeModalPopup);
+
+    // Quando o usuário clicar fora do conteúdo do modal, fecha o modal
+    window.addEventListener('click', function(event) {
+        if (event.target == modal) {
+            closeModalPopup();
+        }
+    });
+});
+
+function openItemDetails(name, price, image, description, additional, additionalPrice) {
+    var modal = document.getElementById("itemModal");
+    document.getElementById("itemName").innerText = name;
+    const itemPriceElement = document.getElementById("itemPrice");
+    itemPriceElement.innerText = price.toFixed(2);
+    itemPriceElement.dataset.basePrice = price; // Store base price in data attribute
+    document.getElementById("itemImage").src = image;
+    document.getElementById("itemDescription").innerText = description;
+
+    const additionalPriceElement = document.getElementById("additionalPrice");
+    additionalPriceElement.dataset.price = additionalPrice; // Store additional unit price in data attribute
+    additionalPriceElement.innerText = (0).toFixed(2);
+
+    const itemAdditionalElement = document.getElementById("itemAdditional");
+    const itemAdditionalDescriptionElement = document.getElementById("itemAddicionalDescription");
+    itemAdditionalElement.value = itemAdditionalElement.min; // Reset to min value
+
+    if (additional) {
+        showInputs(); // Mostra os inputs se houver adicionais
+        itemAdditionalDescriptionElement.innerText = additional;
+        updateAdditionalPrice(); // Update price initially
+    } else {
+        hideInputs(); // Esconde os inputs se não houver adicionais
+    }
+
+    document.getElementById("addToCartButton").onclick = function() {
+        addItem(name, parseFloat(itemPriceElement.dataset.basePrice), additional, additionalPrice);
+        modal.style.display = "none";
+    };
+
+    modal.style.display = "block";
+}
+
+// Certifique-se de que a função updateAdditionalPrice está definida antes de ser chamada
+function updateAdditionalPrice() {
+    const additionalPrice = parseFloat(document.getElementById('additionalPrice').dataset.price);
+    const additionalQuantity = parseInt(document.getElementById('itemAdditional').value);
+    const additionalTotalPrice = additionalPrice * additionalQuantity;
+    document.getElementById("additionalPrice").innerText = 'R$ ' + additionalTotalPrice.toFixed(2);
+
+    // Atualizar o preço do item
+    const basePrice = parseFloat(document.getElementById('itemPrice').dataset.basePrice);
+    const totalPrice = basePrice + additionalTotalPrice;
+    document.getElementById('itemPrice').innerText = 'R$ ' + totalPrice.toFixed(2);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
     const buttonMinus = document.querySelector('.buttonMinus');
     const buttonPlus = document.querySelector('.buttonPlus');
     const itemAdditional = document.getElementById('itemAdditional');
@@ -124,87 +208,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
-function hideInputs() {
-    const inputs = document.querySelectorAll('.inputPopup');
-    inputs.forEach(input => {
-        input.style.display = 'none'; // Esconde o input
-    });
-
-    const buttons = document.querySelectorAll('.buttonMinus, .buttonPlus');
-    buttons.forEach(button => {
-        button.style.display = 'none'; // Esconde os botões
-    });
-
-    const descriptions = document.querySelectorAll('#itemAddicionalDescription, #additionalPrice');
-    descriptions.forEach(description => {
-        description.style.display = 'none'; // Esconde as descrições
-    });
-}
-
-function showInputs() {
-    const inputs = document.querySelectorAll('.inputPopup');
-    inputs.forEach(input => {
-        input.style.display = 'block'; // Mostra o input
-    });
-
-    const buttons = document.querySelectorAll('.buttonMinus, .buttonPlus');
-    buttons.forEach(button => {
-        button.style.display = 'block'; // Mostra os botões
-    });
-
-    const descriptions = document.querySelectorAll('#itemAddicionalDescription, #additionalPrice');
-    descriptions.forEach(description => {
-        description.style.display = 'block'; // Mostra as descrições
-    });
-}
-
-function openItemDetails(name, price, image, description, additional, additionalPrice) {
-    var modal = document.getElementById("itemModal");
-    document.getElementById("itemName").innerText = name;
-    const itemPriceElement = document.getElementById("itemPrice");
-    itemPriceElement.innerText = 'R$ ' + price.toFixed(2);
-    itemPriceElement.dataset.basePrice = price; // Store base price in data attribute
-    document.getElementById("itemImage").src = image;
-    document.getElementById("itemDescription").innerText = description;
-
-    const additionalPriceElement = document.getElementById("additionalPrice");
-    additionalPriceElement.dataset.price = additionalPrice; // Store additional unit price in data attribute
-    additionalPriceElement.innerText = 'R$ ' + (0).toFixed(2);
-
-    const itemAdditionalElement = document.getElementById("itemAdditional");
-    const itemAdditionalDescriptionElement = document.getElementById("itemAddicionalDescription");
-    itemAdditionalElement.value = itemAdditionalElement.min; // Reset to min value
-
-    if (additional) {
-        showInputs(); // Mostra os inputs se houver adicionais
-        itemAdditionalDescriptionElement.innerText = additional;
-        updateAdditionalPrice(); // Update price initially
-    } else {
-        hideInputs(); // Esconde os inputs se não houver adicionais
-    }
-
-    document.getElementById("addToCartButton").onclick = function() {
-        addItem(name, parseFloat(itemPriceElement.dataset.basePrice), additional, additionalPrice);
-        modal.style.display = "none";
-    };
-
-    modal.style.display = "block";
-
-    document.getElementsByClassName("close")[0].onclick = function() {
-        modal.style.display = "none";
-    };
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    };
-}
-
-
-
-
 
 function hideInputs() {
     const inputs = document.querySelectorAll('.inputPopup');
@@ -289,6 +292,21 @@ document.getElementById('copyImage').addEventListener('click', function() {
     const messageElement = document.getElementById('message');
     messageElement.textContent = 'URL copiada para a área de transferência!';
 });
+
+
+window.addEventListener('scroll', function() {
+    const stickyElement = document.getElementById('stickyElement');
+    const stickyContainer = document.querySelector('.sticky-container');
+    const offsetTop = stickyContainer.offsetTop;
+
+    if (window.pageYOffset > offsetTop) {
+        stickyElement.classList.add('sticky');
+    } else {
+        stickyElement.classList.remove('sticky');
+    }
+});
+
+
 
 // Lista de caminhos para as imagens
 var imagens = [

@@ -275,6 +275,7 @@ footer {
     flex-wrap: wrap;
     align-content: center;
     justify-content: center; 
+    align-items: center;
 }
 
 .gridProductsSpace {
@@ -497,6 +498,9 @@ a:hover {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease 0s;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgb(255, 255, 255);
 }
 
 .sticky-element.sticky {
@@ -957,9 +961,6 @@ span.close {
     .logoHeader {
         width: 180px;
         height: 180px;
-        position: absolute;
-        left: 22%;
-        top: 5%;
     }
 
 
