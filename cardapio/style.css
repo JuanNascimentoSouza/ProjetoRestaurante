@@ -708,6 +708,10 @@ span.close {
     align-items: center;
 }
 
+div.inputStylePopup.inputPopup2 {
+    display: flex;
+}
+
 .buttonPlus {
     display: flex;
     justify-content: flex-end;
@@ -725,6 +729,38 @@ span.close {
 }
 
 .buttonMinus {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    background: #f3f3f3;
+    color: #606669;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}
+
+.buttonPlus2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    background: #f3f3f3;
+    color: #606669;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}
+
+.buttonMinus2 {
     display: flex;
     justify-content: flex-end;
     align-items: center;
