@@ -712,6 +712,19 @@ div.inputStylePopup.inputPopup2 {
     display: flex;
 }
 
+element.style{
+    display: flex;
+}
+
+.inputStylePopup.inputPopup2 {
+    display: flex;
+}
+
+.stylePopupInput {
+    display: flex;
+    align-items: center;
+}
+
 .buttonPlus {
     display: flex;
     justify-content: flex-end;
