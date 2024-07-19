@@ -704,7 +704,7 @@ span.close {
 }
 
 .inputStylePopup {
-    display: flex;
+    display: flex !important;
     align-items: center;
 }
 

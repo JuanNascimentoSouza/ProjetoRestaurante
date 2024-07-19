@@ -194,23 +194,26 @@ function openItemDetails(name, price, image, description, additional, additional
     additionalPriceElement.dataset.price = additionalPrice || 0;
     additionalPriceElement.innerText = 'R$ 0.00';
 
-    const additionalPriceElement2 = document.getElementById("additionalPrice2");
-    additionalPriceElement2.dataset.price = additionalPrice2 || 0;
-    additionalPriceElement2.innerText = 'R$ 0.00';
-
     const itemAdditionalElement = document.getElementById("itemAdditional");
     const itemAdditionalDescriptionElement = document.getElementById("itemAddicionalDescription");
     itemAdditionalElement.value = itemAdditionalElement.min;
 
+    // Check if additional and additionalPrice are provided
+    if (additional && additionalPrice) {
+        document.getElementById("inputHide").style.display = 'block';
+        itemAdditionalDescriptionElement.innerText = additional;
+        additionalPriceElement.innerText = 'R$ ' + additionalPrice.toFixed(2);
+    } else {
+        document.getElementById("inputHide").style.display = 'none';
+    }
+
+    const additionalPriceElement2 = document.getElementById("additionalPrice2");
+    additionalPriceElement2.dataset.price = additionalPrice2 || 0;
+    additionalPriceElement2.innerText = 'R$ 0.00';
+
     const itemAdditionalElement2 = document.getElementById("itemAdditional2");
     const itemAdditionalDescriptionElement2 = document.getElementById("itemAddicionalDescription2");
     itemAdditionalElement2.value = itemAdditionalElement2.min;
-
-    if (additional) {
-        showInputs('inputPopup', 'itemAdditional', 'itemAddicionalDescription', additional);
-    } else {
-        hideInputs('inputPopup', 'itemAdditional', 'itemAddicionalDescription');
-    }
 
     if (additional2) {
         showInputs('inputPopup2', 'itemAdditional2', 'itemAddicionalDescription2', additional2);
@@ -225,6 +228,7 @@ function openItemDetails(name, price, image, description, additional, additional
 
     modal.style.display = "block";
 }
+
 
 function hideInputs(popupClass, inputId, descriptionId) {
     const inputs = document.querySelectorAll(`.${popupClass}`);
