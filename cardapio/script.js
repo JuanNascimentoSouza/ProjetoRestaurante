@@ -123,22 +123,6 @@ function sendOrder() {
     window.open(whatsappLink, '_blank');
 }
 
-function updateAdditionalPrice() {
-    const additionalPrice = parseFloat(document.getElementById('additionalPrice').dataset.price || 0);
-    const additionalQuantity = parseInt(document.getElementById('itemAdditional').value || 0);
-    const additionalTotalPrice = additionalPrice * additionalQuantity;
-    document.getElementById("additionalPrice").innerText = 'R$ ' + additionalTotalPrice.toFixed(2);
-
-    const additionalPrice2 = parseFloat(document.getElementById('additionalPrice2').dataset.price || 0);
-    const additionalQuantity2 = parseInt(document.getElementById('itemAdditional2').value || 0);
-    const additionalTotalPrice2 = additionalPrice2 * additionalQuantity2;
-    document.getElementById("additionalPrice2").innerText = 'R$ ' + additionalTotalPrice2.toFixed(2);
-
-    const basePrice = parseFloat(document.getElementById('itemPrice').dataset.basePrice);
-    const totalPrice = basePrice + additionalTotalPrice + additionalTotalPrice2;
-    document.getElementById('itemPrice').innerText = 'R$ ' + totalPrice.toFixed(2);
-}
-
 document.addEventListener("DOMContentLoaded", function() {
     const buttonMinus = document.querySelector('.buttonMinus');
     const buttonPlus = document.querySelector('.buttonPlus');
@@ -147,6 +131,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const buttonMinus2 = document.querySelector('.buttonMinus2');
     const buttonPlus2 = document.querySelector('.buttonPlus2');
     const itemAdditional2 = document.getElementById('itemAdditional2');
+
+    const buttonMinus3 = document.querySelector('.buttonMinus3');
+    const buttonPlus3 = document.querySelector('.buttonPlus3');
+    const itemAdditional3 = document.getElementById('itemAdditional3');
 
     buttonMinus.addEventListener('click', function() {
         let currentValue = parseInt(itemAdditional.value);
@@ -179,9 +167,25 @@ document.addEventListener("DOMContentLoaded", function() {
             updateAdditionalPrice();
         }
     });
+
+    buttonMinus3.addEventListener('click', function() {
+        let currentValue = parseInt(itemAdditional3.value);
+        if (currentValue > parseInt(itemAdditional3.min)) {
+            itemAdditional3.value = currentValue - 1;
+            updateAdditionalPrice();
+        }
+    });
+
+    buttonPlus3.addEventListener('click', function() {
+        let currentValue = parseInt(itemAdditional3.value);
+        if (currentValue < parseInt(itemAdditional3.max)) {
+            itemAdditional3.value = currentValue + 1;
+            updateAdditionalPrice();
+        }
+    });
 });
 
-function openItemDetails(name, price, image, description, additional, additionalPrice, additional2, additionalPrice2) {
+function openItemDetails(name, price, image, description, additional, additionalPrice, additional2, additionalPrice2, additional3, additionalPrice3) {
     var modal = document.getElementById("itemModal");
     document.getElementById("itemName").innerText = name;
     const itemPriceElement = document.getElementById("itemPrice");
@@ -198,7 +202,6 @@ function openItemDetails(name, price, image, description, additional, additional
     const itemAdditionalDescriptionElement = document.getElementById("itemAddicionalDescription");
     itemAdditionalElement.value = itemAdditionalElement.min;
 
-    // Check if additional and additionalPrice are provided
     if (additional && additionalPrice) {
         document.getElementById("inputHide").style.display = 'block';
         itemAdditionalDescriptionElement.innerText = additional;
@@ -215,20 +218,56 @@ function openItemDetails(name, price, image, description, additional, additional
     const itemAdditionalDescriptionElement2 = document.getElementById("itemAddicionalDescription2");
     itemAdditionalElement2.value = itemAdditionalElement2.min;
 
-    if (additional2) {
+    if (additional2 && additionalPrice2) {
         showInputs('inputPopup2', 'itemAdditional2', 'itemAddicionalDescription2', additional2);
     } else {
         hideInputs('inputPopup2', 'itemAdditional2', 'itemAddicionalDescription2');
     }
 
+    const additionalPriceElement3 = document.getElementById("additionalPrice3");
+    additionalPriceElement3.dataset.price = additionalPrice3 || 0;
+    additionalPriceElement3.innerText = 'R$ 0.00';
+
+    const itemAdditionalElement3 = document.getElementById("itemAdditional3");
+    const itemAdditionalDescriptionElement3 = document.getElementById("itemAddicionalDescription3");
+    itemAdditionalElement3.value = itemAdditionalElement3.min;
+
+    if (additional3 && additionalPrice3) {
+        document.getElementById("inputHide3").style.display = 'block';
+        itemAdditionalDescriptionElement3.innerText = additional3;
+        additionalPriceElement3.innerText = 'R$ ' + additionalPrice3.toFixed(2);
+    } else {
+        document.getElementById("inputHide3").style.display = 'none';
+    }
+
     document.getElementById("addToCartButton").onclick = function() {
-        addItem(name, parseFloat(itemPriceElement.dataset.basePrice), additional, additionalPrice, additional2, additionalPrice2);
+        addItem(name, parseFloat(itemPriceElement.dataset.basePrice), additional, additionalPrice, additional2, additionalPrice2, additional3, additionalPrice3);
         modal.style.display = "none";
     };
 
     modal.style.display = "block";
 }
 
+function updateAdditionalPrice() {
+    const additionalPrice = parseFloat(document.getElementById('additionalPrice').dataset.price || 0);
+    const additionalQuantity = parseInt(document.getElementById('itemAdditional').value || 0);
+    const additionalTotalPrice = additionalPrice * additionalQuantity;
+    document.getElementById("additionalPrice").innerText = 'R$ ' + additionalTotalPrice.toFixed(2);
+
+    const additionalPrice2 = parseFloat(document.getElementById('additionalPrice2').dataset.price || 0);
+    const additionalQuantity2 = parseInt(document.getElementById('itemAdditional2').value || 0);
+    const additionalTotalPrice2 = additionalPrice2 * additionalQuantity2;
+    document.getElementById("additionalPrice2").innerText = 'R$ ' + additionalTotalPrice2.toFixed(2);
+
+    const additionalPrice3 = parseFloat(document.getElementById('additionalPrice3').dataset.price || 0);
+    const additionalQuantity3 = parseInt(document.getElementById('itemAdditional3').value || 0);
+    const additionalTotalPrice3 = additionalPrice3 * additionalQuantity3;
+    document.getElementById("additionalPrice3").innerText = 'R$ ' + additionalTotalPrice3.toFixed(2);
+
+    const basePrice = parseFloat(document.getElementById('itemPrice').dataset.basePrice);
+    const totalPrice = basePrice + additionalTotalPrice + additionalTotalPrice2 + additionalTotalPrice3;
+    document.getElementById('itemPrice').innerText = 'R$ ' + totalPrice.toFixed(2);
+}
 
 function hideInputs(popupClass, inputId, descriptionId) {
     const inputs = document.querySelectorAll(`.${popupClass}`);

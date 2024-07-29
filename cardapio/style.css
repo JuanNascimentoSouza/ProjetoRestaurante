@@ -720,6 +720,10 @@ element.style{
     display: flex;
 }
 
+.inputStylePopup.inputPopup2 {
+    display: flex;
+}
+
 .stylePopupInput {
     display: flex;
     align-items: center;
@@ -774,6 +778,38 @@ element.style{
 }
 
 .buttonMinus2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    background: #f3f3f3;
+    color: #606669;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}
+
+.buttonPlus3 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    background: #f3f3f3;
+    color: #606669;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}
+
+.buttonMinus3 {
     display: flex;
     justify-content: flex-end;
     align-items: center;
