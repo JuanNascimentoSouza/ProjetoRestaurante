@@ -1,9 +1,8 @@
-
-*{
+* {
     font-family: "Freeman", sans-serif;
     box-sizing: border-box;
     background-color: #ffffff;
-    touch-action: manipulation;   
+    touch-action: manipulation;
 }
 
 img {
@@ -11,17 +10,17 @@ img {
     background-size: cover;
 }
 
-.textoPorCima{
+.textoPorCima {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 
 }
 
 .imageHeader {
     width: 100%;
-   
+
     height: 172px;
     display: flex;
     align-items: center;
@@ -85,6 +84,7 @@ img {
     cursor: pointer;
     background: transparent;
 }
+
 .share.changed {
     transition: background-color 0.3s ease;
     background-color: #c2a710;
@@ -97,10 +97,10 @@ img {
     border: none;
     padding: 10px 10px;
     text-decoration: none;
-    font-size: 16px; 
-    
-    border-radius: 8px; 
-    transition: background-color 0.3s ease; 
+    font-size: 16px;
+
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
     cursor: pointer;
 }
 
@@ -136,10 +136,10 @@ main {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px; 
-    
-    border-radius: 8px; 
-    transition: background-color 0.3s ease; 
+    font-size: 16px;
+
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
     cursor: pointer;
     bottom: 60px;
 }
@@ -149,7 +149,7 @@ main {
 }
 
 .btn-verde:focus {
-    outline: none; 
+    outline: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -166,11 +166,11 @@ main {
 
 li {
     border-radius: 5px;
-    box-shadow: 0 0 1px rgba(0,0,0,1.0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 1.0);
 }
 
 li h3 {
-    
+
     text-transform: uppercase;
     line-height: 22px;
     cursor: pointer;
@@ -216,8 +216,10 @@ li input[type="number"] {
     margin-top: 0.5rem;
     transition: background-color 0.3s ease;
 }
+
 .botaoAdicionar.changed {
-    background-color: #c2a710; /* Nova cor do botão após o clique */
+    background-color: #c2a710;
+    /* Nova cor do botão após o clique */
 }
 
 .botaoAdicionar:hover {
@@ -229,7 +231,7 @@ footer {
     margin: 2rem 0;
 }
 
-.gridItens{
+.gridItens {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
@@ -248,8 +250,8 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
-    
+
+
 }
 
 #sendOrder {
@@ -274,7 +276,7 @@ footer {
     flex-direction: column;
     flex-wrap: wrap;
     align-content: center;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 }
 
@@ -299,7 +301,8 @@ a {
 
 /* Muda a cor dos links quando o mouse passa sobre eles */
 a:hover {
-    color: rgb(255, 0, 0); /* Cor ao passar o mouse */
+    color: rgb(255, 0, 0);
+    /* Cor ao passar o mouse */
     transform: scale(1.05);
 }
 
@@ -312,7 +315,7 @@ a:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .cart-popup-content {
@@ -323,7 +326,7 @@ a:hover {
     width: 80%;
     max-width: 600px;
     position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
 }
 
@@ -359,24 +362,24 @@ a:hover {
     background-color: #ff1a1a;
 }
 
-#cartItems ul{
+#cartItems ul {
 
     display: flex !important;
 
 }
 
-#hamburgueres{
+#hamburgueres {
 
     position: relative;
     right: 0px;
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
     margin-top: 35px;
 
 }
 
-.link-container{
+.link-container {
     justify-content: center;
     align-items: center;
     margin-top: 45px;
@@ -387,45 +390,45 @@ a:hover {
     padding: 3px 35px;
     border-radius: 8px;
 }
-    
+
 .menu-link {
-    
+
     padding-right: 0px;
     padding-left: 0px;
-    
+
 }
 
 
-#pizza{
+#pizza {
 
     position: relative;
     right: 0px;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#salgados{
+#salgados {
 
     position: relative;
     right: 0px;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
-   
+
 }
 
-#bebidas{
+#bebidas {
 
     position: relative;
     right: 0px;
-   
+
     display: flex;
     align-items: center;
     justify-content: center;
-  
+
 }
 
 #openCartButton {
@@ -435,7 +438,7 @@ a:hover {
     position: relative;
     top: 21px;
     left: 28px;
-    
+
 
 }
 
@@ -471,8 +474,8 @@ a:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
     padding-top: 60px;
 }
 
@@ -516,7 +519,8 @@ a:hover {
 
 .modal {
 
-    display: none; /* Inicialmente oculto */
+    display: none;
+    /* Inicialmente oculto */
     position: fixed;
     z-index: 1;
     left: 0;
@@ -524,7 +528,7 @@ a:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 
 }
 
@@ -541,7 +545,7 @@ a:hover {
     flex-direction: column;
     align-items: center;
     border-radius: 30px;
-    
+
 
 }
 
@@ -620,7 +624,7 @@ span.close {
 
 
 
-#closeCartPopup { 
+#closeCartPopup {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -638,9 +642,9 @@ span.close {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px; 
-    border-radius: 8px; 
-    transition: background-color 0.3s ease; 
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
     cursor: pointer;
     bottom: 60px;
 }
@@ -686,7 +690,7 @@ span.close {
 }
 
 #quantity {
-    display: flex; 
+    display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 15px;
@@ -701,27 +705,6 @@ span.close {
 .inputPopup {
     width: 30px;
 
-}
-
-.inputStylePopup {
-    display: flex !important;
-    align-items: center;
-}
-
-div.inputStylePopup.inputPopup2 {
-    display: flex;
-}
-
-element.style{
-    display: flex;
-}
-
-.inputStylePopup.inputPopup2 {
-    display: flex;
-}
-
-.inputStylePopup.inputPopup2 {
-    display: flex;
 }
 
 .stylePopupInput {
@@ -840,8 +823,8 @@ element.style{
         height: 120px;
         left: 30%;
         top: 5%;
-        
-        
+
+
     }
 
     .textoPorCima {
@@ -855,10 +838,10 @@ element.style{
         border: none;
         padding: 10px 10px;
         text-decoration: none;
-        font-size: 16px; 
-        
-        border-radius: 8px; 
-        transition: background-color 0.3s ease; 
+        font-size: 16px;
+
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
         cursor: pointer;
     }
 
@@ -880,7 +863,8 @@ element.style{
         width: 300px;
     }
 
-    .text-overlay h1, .text-overlay h2 {
+    .text-overlay h1,
+    .text-overlay h2 {
         font-size: 1.2em;
     }
 
@@ -908,10 +892,11 @@ element.style{
         height: 120px;
         left: 24%;
         top: 9%;
-        
+
     }
 
-    .text-overlay h1, .text-overlay h2 {
+    .text-overlay h1,
+    .text-overlay h2 {
         font-size: 1.2em;
     }
 
@@ -938,7 +923,8 @@ element.style{
         top: 9%;
     }
 
-    .text-overlay h1, .text-overlay h2 {
+    .text-overlay h1,
+    .text-overlay h2 {
         font-size: 1.4em;
     }
 
@@ -965,7 +951,8 @@ element.style{
         top: 7%;
     }
 
-    .text-overlay h1, .text-overlay h2 {
+    .text-overlay h1,
+    .text-overlay h2 {
         font-size: 1.6em;
     }
 
@@ -995,7 +982,8 @@ element.style{
         top: 4%;
     }
 
-    .text-overlay h1, .text-overlay h2 {
+    .text-overlay h1,
+    .text-overlay h2 {
         font-size: 1.8em;
     }
 
@@ -1018,7 +1006,8 @@ element.style{
         top: 4%;
     }
 
-    .text-overlay h1, .text-overlay h2 {
+    .text-overlay h1,
+    .text-overlay h2 {
         font-size: 2em;
     }
 
@@ -1032,7 +1021,7 @@ element.style{
         padding: 25px;
     }
 
-    
+
     .link-container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -1049,7 +1038,8 @@ element.style{
     }
 
 
-    .text-overlay h1, .text-overlay h2 {
+    .text-overlay h1,
+    .text-overlay h2 {
         font-size: 2.2em;
     }
 
@@ -1064,4 +1054,3 @@ element.style{
         padding: 30px;
     }
 }
-
