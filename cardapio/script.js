@@ -210,7 +210,7 @@ function openItemDetails(name, price, image, description, additional, additional
     var modal = document.getElementById("itemModal");
     document.getElementById("itemName").innerText = name;
     const itemPriceElement = document.getElementById("itemPrice");
-    itemPriceElement.innerText = 'R$ ' + price.toFixed(2);
+    itemPriceElement.innerText = price.toFixed(2);
     itemPriceElement.dataset.basePrice = price;
     document.getElementById("itemImage").src = image;
     document.getElementById("itemDescription").innerText = description;
