@@ -1,8 +1,8 @@
 let order = [];
 
-function addItem(name, price, additional, additionalPrice, additional2, additionalPrice2, additional3, additionalPrice3) {
+function addItem(name, price, additional, additionalPrice, additional2, additionalPrice2, additional3, additionalPrice3, observation) {
     const quantity = 1;
-    const item = { name, price, quantity };
+    const item = { name, price, quantity, observation };
 
     if (additional) {
         item.additional = additional;
@@ -64,7 +64,7 @@ function updateCart() {
             <button onclick="removeItem(${index})">Remover</button>
         `;
 
-        if (item.additional) {
+        if (item.additional && item.additionalQuantity > 0) {
             const additionalTotal = item.additionalPrice * item.additionalQuantity;
             total += additionalTotal;
             listItem.innerHTML += `
@@ -73,7 +73,7 @@ function updateCart() {
             `;
         }
 
-        if (item.additional2) {
+        if (item.additional2 && item.additionalQuantity2 > 0) {
             const additionalTotal2 = item.additionalPrice2 * item.additionalQuantity2;
             total += additionalTotal2;
             listItem.innerHTML += `
@@ -82,13 +82,18 @@ function updateCart() {
             `;
         }
 
-        if (item.additional3) {
+        if (item.additional3 && item.additionalQuantity3 > 0) {
             const additionalTotal3 = item.additionalPrice3 * item.additionalQuantity3;
             total += additionalTotal3;
             listItem.innerHTML += `
                 <br>
                 + ${item.additionalQuantity3} x ${item.additional3}: R$ ${additionalTotal3.toFixed(2)}
             `;
+        }
+
+        // Exibir observação, se houver
+        if (item.observation) {
+            listItem.innerHTML += `<br><strong>Observação:</strong> ${item.observation}`;
         }
 
         cartItemsElement.appendChild(listItem);
@@ -116,22 +121,27 @@ function sendOrder() {
         message += `- ${item.quantity} x ${item.name}: R$ ${itemTotal.toFixed(2)}\n`;
         total += itemTotal;
 
-        if (item.additional) {
+        if (item.additional && item.additionalQuantity > 0) {
             const additionalTotal = item.additionalPrice * item.additionalQuantity;
             message += `  + ${item.additionalQuantity} x ${item.additional}: R$ ${additionalTotal.toFixed(2)}\n`;
             total += additionalTotal;
         }
 
-        if (item.additional2) {
+        if (item.additional2 && item.additionalQuantity2 > 0) {
             const additionalTotal2 = item.additionalPrice2 * item.additionalQuantity2;
             message += `  + ${item.additionalQuantity2} x ${item.additional2}: R$ ${additionalTotal2.toFixed(2)}\n`;
             total += additionalTotal2;
         }
 
-        if (item.additional3) {
+        if (item.additional3 && item.additionalQuantity3 > 0) {
             const additionalTotal3 = item.additionalPrice3 * item.additionalQuantity3;
             message += `  + ${item.additionalQuantity3} x ${item.additional3}: R$ ${additionalTotal3.toFixed(2)}\n`;
             total += additionalTotal3;
+        }
+
+        // Adiciona a observação à mensagem, se houver
+        if (item.observation) {
+            message += `  Observação: ${item.observation}\n`;
         }
     });
 
@@ -143,6 +153,7 @@ function sendOrder() {
 
     window.open(whatsappLink, '_blank');
 }
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const buttonMinus = document.querySelector('.buttonMinus');
@@ -275,8 +286,9 @@ document.getElementById('addToCartButton').addEventListener('click', function() 
     const additionalPrice2 = parseFloat(document.getElementById("additionalPrice2").dataset.price);
     const itemAdditionalDescription3 = document.getElementById("itemAddicionalDescription3").innerText;
     const additionalPrice3 = parseFloat(document.getElementById("additionalPrice3").dataset.price);
+    const itemObservation = document.getElementById("itemObservation").value; // Captura a observação
 
-    addItem(itemName, itemPrice, itemAdditionalDescription, additionalPrice, itemAdditionalDescription2, additionalPrice2, itemAdditionalDescription3, additionalPrice3);
+    addItem(itemName, itemPrice, itemAdditionalDescription, additionalPrice, itemAdditionalDescription2, additionalPrice2, itemAdditionalDescription3, additionalPrice3, itemObservation);
     document.getElementById("itemModal").style.display = "none";
 });
 

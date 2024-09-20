@@ -656,7 +656,6 @@ span.close {
 #itemName {
     text-transform: uppercase;
     line-height: 22px;
-    cursor: pointer;
     font-weight: 400 bolder;
     font-size: 16px;
     text-align: center
@@ -813,6 +812,20 @@ span.close {
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
+    text-align: center;
+}
+
+.observation {
+    display: flex;
+    line-height: 22px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.observation2 {
+    display: flex;
+    line-height: 22px;
+    font-size: 16px;
     text-align: center;
 }
 
