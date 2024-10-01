@@ -452,4 +452,58 @@ function preloadImagens() {
     }
 }
 
+function calculateFreight() {
+    console.log("Iniciando cálculo de frete...");
+    const address = document.getElementById('address').value;
+    const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
+    
+    const geocoder = new google.maps.Geocoder();
+
+    // Geocode do endereço do estabelecimento
+    geocoder.geocode({ 'address': establishmentAddress }, function(establishmentResults, status) {
+        if (status === 'OK') {
+            const origin = establishmentResults[0].geometry.location;
+            console.log("Geocodificação do endereço do estabelecimento bem-sucedida:", origin);
+
+            // Geocode do endereço completo do usuário
+            geocoder.geocode({ 'address': address }, function(userResults, status) {
+                if (status === 'OK') {
+                    const destination = userResults[0].geometry.location;
+                    console.log("Geocodificação do endereço do cliente bem-sucedida:", destination);
+
+                    const service = new google.maps.DistanceMatrixService();
+                    service.getDistanceMatrix({
+                        origins: [origin],
+                        destinations: [destination],
+                        travelMode: 'DRIVING',
+                        unitSystem: google.maps.UnitSystem.METRIC
+                    }, function(response, status) {
+                        if (status === 'OK') {
+                            const distance = response.rows[0].elements[0].distance.value / 1000;
+                            const freight = calculateFreightValue(distance);
+                            document.getElementById('result').innerText = `Distância: ${distance.toFixed(2)} km\nFrete: R$ ${freight.toFixed(2)}`;
+                            console.log(`Distância: ${distance.toFixed(2)} km, Frete: R$ ${freight.toFixed(2)}`);
+                        } else {
+                            console.error('Erro ao calcular a distância:', status);
+                            alert('Erro ao calcular a distância: ' + status);
+                        }
+                    });
+                } else {
+                    console.error('Erro ao geocodificar o endereço do cliente:', status);
+                    alert('Erro ao geocodificar o endereço do cliente: ' + status);
+                }
+            });
+        } else {
+            console.error('Erro ao geocodificar o endereço do estabelecimento:', status);
+            alert('Erro ao geocodificar o endereço do estabelecimento: ' + status);
+        }
+    });
+}
+
+function calculateFreightValue(distance) {
+    const fixedRate = 4;
+    const ratePerKm = 2;
+    return fixedRate + (ratePerKm * distance);
+}
+
 preloadImagens();

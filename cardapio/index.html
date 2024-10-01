@@ -477,7 +477,7 @@
             onmouseout="normalImage()" onclick="openCartPopup()">
 
     </footer>
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_ImmW2VVZ-Urj7XCtzhpKHXDbt7-0PTc&callback=initMap" async defer></script>
     <!-- Popup do carrinho -->
     <div id="cartPopup" class="cart-popup" style="display: none;">
         <div class="cart-popup-content">
@@ -485,6 +485,20 @@
             <h2>Carrinho de Compras</h2>
             <ul id="cartItems"></ul>
             <p id="cartTotal">Total: R$ 0,00</p>
+            
+            <div class="frete">
+
+                <h1>Calculador de Frete</h1>
+
+                <label for="address">Digite seu endereço completo:</label>
+
+                <input type="text" id="address" placeholder="Rua, número, cidade, estado, CEP">
+
+                <button onclick="calculateFreight()">Calcular Frete</button>
+
+                <div id="result"></div>
+
+            </div>
         </div>
     </div>
 
