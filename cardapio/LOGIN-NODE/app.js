@@ -3,11 +3,28 @@ const bcrypt = require("bcrypt");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const path = require("path");
+const mysql = require("mysql2"); // Biblioteca MySQL
 
 const app = express();
 const PORT = 3000;
 
-const users = []; // Armazenamento temporário de usuários
+// Configuração da conexão com o banco de dados MySQL
+const db = mysql.createConnection({
+  host: '127.0.0.1',   // Hostname como mostrado na imagem
+  user: 'root',        // Usuário 'root', como mostrado na imagem
+  password: 'root',        // Senha não foi especificada, então deixe em branco
+  port: 3306,          // Porta padrão do MySQL, como mostrado
+  database: 'user_db'  // Nome do banco de dados que você criar
+});
+
+// Conectando ao banco de dados
+db.connect((err) => {
+  if (err) {
+    console.error('Erro ao conectar ao MySQL:', err);
+    return;
+  }
+  console.log('Conectado ao banco de dados MySQL');
+});
 
 // Configurando o body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -46,49 +63,65 @@ app.get("/register", (req, res) => {
 });
 
 // Rota para processar o registro
-app.post('/register', async (req, res) => {
+app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
-  // Verificar se o usuário já existe
-  const userExists = users.find(user => user.username === username);
-  if (userExists) {
-    return res.render('user-exists'); // Renderiza a página de erro 'Usuário já existe'
-  }
+  // Verificar se o usuário já existe no banco de dados
+  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, result) => {
+    if (err) {
+      console.error('Erro na consulta ao banco de dados:', err);
+      return res.render('error', { message: 'Erro ao registrar usuário' });
+    }
 
-  // Criptografar a senha
-  const hashedPassword = await bcrypt.hash(password, 10);
+    if (result.length > 0) {
+      return res.render('user-exists'); // Renderiza a página de erro 'Usuário já existe'
+    }
 
-  // Armazenar o novo usuário
-  users.push({
-    username,
-    password: hashedPassword
+    // Criptografar a senha
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Inserir o novo usuário no banco de dados
+    db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err) => {
+      if (err) {
+        console.error('Erro ao inserir usuário no banco de dados:', err);
+        return res.render('error', { message: 'Erro ao registrar usuário' });
+      }
+
+      // Renderiza a página de sucesso após o registro
+      res.render('register-success');
+    });
   });
-
-  // Renderiza a página de sucesso após o registro
-  res.render('register-success'); // Renderiza a página de sucesso após o registro
 });
 
 // Rota para processar o login
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  // Verificar se o usuário existe
-  const user = users.find((user) => user.username === username);
-  if (!user) {
-    return res.render("user-not-found"); // Renderiza a página de erro 'Usuário não encontrado'
-  }
+  // Verificar se o usuário existe no banco de dados
+  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, result) => {
+    if (err) {
+      console.error('Erro na consulta ao banco de dados:', err);
+      return res.render('error', { message: 'Erro ao efetuar login' });
+    }
 
-  // Comparar a senha fornecida com a senha armazenada
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    return res.render("incorrect-password"); // Renderiza a página de erro 'Senha incorreta'
-  }
+    if (result.length === 0) {
+      return res.render("user-not-found"); // Renderiza a página de erro 'Usuário não encontrado'
+    }
 
-  // Criar sessão
-  req.session.user = username;
+    const user = result[0]; // O primeiro resultado da consulta
 
-  // Renderizar página de login bem-sucedido com o nome do usuário
-  res.render("login-success", { username }); // Renderiza a página de sucesso e passa o username
+    // Comparar a senha fornecida com a senha armazenada
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.render("incorrect-password"); // Renderiza a página de erro 'Senha incorreta'
+    }
+
+    // Criar sessão
+    req.session.user = username;
+
+    // Renderizar página de login bem-sucedido com o nome do usuário
+    res.render("login-success", { username }); // Renderiza a página de sucesso e passa o username
+  });
 });
 
 // Rota para o dashboard
