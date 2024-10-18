@@ -115,6 +115,14 @@ a:hover {
   text-align: center;
 }
 
+.error-message {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 20px;
+  border-radius: 5px;
+}
+
 .success {
   color: green;
   font-weight: bold;

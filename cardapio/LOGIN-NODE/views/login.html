@@ -10,10 +10,18 @@
   <div class="container">
     <h1>Login</h1>
     <form action="/login" method="POST">
-      <input type="text" name="username" placeholder="Usuário" required>
-      <input type="password" name="password" placeholder="Senha" required>
+      <label for="username">Usuário:</label>
+      <input type="text" id="username" name="username" required><br><br>
+    
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="password" required><br><br>
+    
+      <label for="adminKey">Chave de Administrador (opcional):</label>
+      <input type="text" id="adminKey" name="adminKey"><br><br>
+    
       <button type="submit">Login</button>
     </form>
+    
     <div class="links">
       <a href="/register">Registrar-se</a>
     </div>

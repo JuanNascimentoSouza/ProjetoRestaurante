@@ -17,13 +17,13 @@ const db = mysql.createConnection({
   database: 'user_db'  // Nome do banco de dados que você criar
 });
 
-// Conectando ao banco de dados
+// Conectar ao banco de dados MySQL
 db.connect((err) => {
   if (err) {
-    console.error('Erro ao conectar ao MySQL:', err);
+    console.error("Erro ao conectar ao banco de dados:", err);
     return;
   }
-  console.log('Conectado ao banco de dados MySQL');
+  console.log("Conectado ao banco de dados MySQL!");
 });
 
 // Configurando o body-parser
@@ -63,17 +63,14 @@ app.get("/register", (req, res) => {
 });
 
 // Rota para processar o registro
-app.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+app.post('/register', async (req, res) => {
+  const { username, password, adminKey } = req.body;
 
   // Verificar se o usuário já existe no banco de dados
-  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, result) => {
-    if (err) {
-      console.error('Erro na consulta ao banco de dados:', err);
-      return res.render('error', { message: 'Erro ao registrar usuário' });
-    }
-
-    if (result.length > 0) {
+  const query = 'SELECT * FROM users WHERE username = ?';
+  db.query(query, [username], async (err, results) => {
+    if (err) throw err;
+    if (results.length > 0) {
       return res.render('user-exists'); // Renderiza a página de erro 'Usuário já existe'
     }
 
@@ -81,34 +78,27 @@ app.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Inserir o novo usuário no banco de dados
-    db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err) => {
-      if (err) {
-        console.error('Erro ao inserir usuário no banco de dados:', err);
-        return res.render('error', { message: 'Erro ao registrar usuário' });
-      }
-
-      // Renderiza a página de sucesso após o registro
-      res.render('register-success');
+    const insertQuery = 'INSERT INTO users (username, password, adminKey) VALUES (?, ?, ?)';
+    db.query(insertQuery, [username, hashedPassword, adminKey], (err, result) => {
+      if (err) throw err;
+      res.render('register-success'); // Renderiza a página de sucesso
     });
   });
 });
 
 // Rota para processar o login
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, adminKey } = req.body;
 
   // Verificar se o usuário existe no banco de dados
-  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, result) => {
-    if (err) {
-      console.error('Erro na consulta ao banco de dados:', err);
-      return res.render('error', { message: 'Erro ao efetuar login' });
-    }
-
-    if (result.length === 0) {
+  const query = 'SELECT * FROM users WHERE username = ?';
+  db.query(query, [username], async (err, results) => {
+    if (err) throw err;
+    if (results.length === 0) {
       return res.render("user-not-found"); // Renderiza a página de erro 'Usuário não encontrado'
     }
 
-    const user = result[0]; // O primeiro resultado da consulta
+    const user = results[0];
 
     // Comparar a senha fornecida com a senha armazenada
     const isMatch = await bcrypt.compare(password, user.password);
@@ -116,22 +106,43 @@ app.post("/login", async (req, res) => {
       return res.render("incorrect-password"); // Renderiza a página de erro 'Senha incorreta'
     }
 
+    // Verificar a chave de administrador
+    if (user.adminKey !== adminKey) {
+      return res.render('incorrect-admin-key'); // Renderiza a página de erro 'Chave de administrador incorreta'
+    }
+
     // Criar sessão
     req.session.user = username;
 
-    // Renderizar página de login bem-sucedido com o nome do usuário
-    res.render("login-success", { username }); // Renderiza a página de sucesso e passa o username
+    // Verificar se é administrador
+    if (adminKey === user.adminKey) {
+      req.session.isAdmin = true;
+      return res.render("admin-dashboard", { username }); // Renderiza a página de administrador
+    } else {
+      req.session.isAdmin = false;
+      return res.render("dashboard", { username }); // Renderiza a página de usuário normal
+    }
   });
 });
 
-// Rota para o dashboard
+// Rota para o dashboard do administrador
+app.get("/admin-dashboard", (req, res) => {
+  if (!req.session.user || !req.session.isAdmin) {
+    return res.redirect("/login");
+  }
+
+  // Renderizar a página do dashboard do administrador
+  res.render("admin-dashboard", { username: req.session.user });
+});
+
+// Rota para o dashboard do usuário comum
 app.get("/dashboard", (req, res) => {
   if (!req.session.user) {
     return res.redirect("/login");
   }
 
-  // Renderizar a página do dashboard com o nome do usuário
-  res.render("dashboard", { username: req.session.user }); // Passa o nome do usuário na sessão
+  // Renderizar a página do dashboard do usuário
+  res.render("dashboard", { username: req.session.user });
 });
 
 // Rota para logout
