@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edição de Pedidos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Editar Pedidos</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Imagem</th>
+            <th>Ações</th>
+        </tr>
+        <% orders.forEach(order => { %>
+            <tr>
+                <td><%= order.id %></td>
+                <td><%= order.name %></td>
+                <td><img src="<%= order.image %>" alt="<%= order.name %>" style="width: 50px; height: 50px;"></td>
+                <td>
+                    <form action="/admin/edit-orders" method="POST">
+                        <input type="hidden" name="id" value="<%= order.id %>">
+                        <input type="text" name="newName" placeholder="Novo nome" required>
+                        <input type="text" name="newImage" placeholder="URL da nova imagem" required>
+                        <button type="submit">Salvar</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+</body>
+</html>

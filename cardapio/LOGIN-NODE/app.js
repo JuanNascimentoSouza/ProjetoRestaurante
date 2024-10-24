@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // Adicionado para suportar JSON
 
 // Configurando a pasta de arquivos estáticos (CSS, JS e imagens)
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 // Configurando as sessões
 app.use(
@@ -48,9 +48,23 @@ app.set("view engine", "ejs");
 // Configurando a pasta de views
 app.set("views", path.join(__dirname, "views"));
 
+// ====================================
+// Criação do middleware de verificação
+// ====================================
+function isAdmin(req, res, next) {
+  if (!req.session.user || !req.session.isAdmin) {
+    return res.status(403).json({ error: "Acesso negado. Somente administradores podem realizar esta ação." });
+  }
+  next(); // Se for administrador, prosseguir
+}
+
+// ====================================
+// Rotas
+// ====================================
+
 // Rota principal para '/'
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "login.html")); // ou renderize um template
+  res.sendFile(path.join(__dirname, "views", "login.html"));
 });
 
 // Rota para exibir o formulário de registro
@@ -107,7 +121,7 @@ app.post("/login", async (req, res) => {
 
     // Verificar a chave de administrador
     if (user.adminKey !== adminKey) {
-      return res.render('incorrect-admin-key'); // Renderiza a página de erro 'Chave de administrador incorreta'
+      return res.render('incorrect-admin-key');
     }
 
     req.session.user = username;
@@ -123,23 +137,13 @@ app.get("/dashboard", (req, res) => {
   if (!req.session.user) {
     return res.redirect("/login");
   }
-  // Renderiza o dashboard.ejs após o login
-  res.render("dashboard", { username: req.session.user }); // Passa o nome do usuário para o EJS
-});
-
-// Rota para o dashboard do usuário comum
-app.get("/dashboard", (req, res) => {
-  if (!req.session.user) {
-    return res.redirect("/login");
-  }
-  // Renderiza a página index.html após o login
-  res.sendFile(path.join(__dirname, "public", "index.html")); // Envia o arquivo index.html
+  res.sendFile(path.join(__dirname, "views", "dashboard.html")); // Envia o arquivo index.html
 });
 
 // Rota para o dashboard do administrador
 app.get("/admin-dashboard", (req, res) => {
   if (!req.session.user || !req.session.isAdmin) {
-    return res.redirect("/"); // Redireciona para a página de login se não estiver autenticado
+    return res.redirect("/");
   }
   res.render("admin-dashboard", { username: req.session.user });
 });
@@ -150,47 +154,70 @@ app.get("/logout", (req, res) => {
     if (err) {
       return res.render('error', { message: 'Erro ao deslogar.' });
     }
-    res.redirect("/"); // Redireciona para a página de login
+    res.redirect("/");
   });
 });
 
 // ============================
-// Rota para editar informações do menu (somente administrador)
-app.get('/admin/edit-info', (req, res) => {
-  if (!req.session.user || !req.session.isAdmin) {
-    return res.status(403).render("error", { message: "Acesso negado." });
-  }
+// Gerenciamento de Conteúdos (CRUD)
+// ============================
 
-  // Busca os dados do banco de dados
-  const query = 'SELECT * FROM menu_info';  // Aqui, 'menu_info' é a tabela contendo as informações
+// GET /conteudo — Para obter todos os conteúdos (visível para todos)
+app.get('/conteudo', (req, res) => {
+  const query = 'SELECT * FROM conteudo';
   db.query(query, (err, results) => {
     if (err) {
-      return res.render('error', { message: 'Erro ao buscar dados.' });
+      return res.status(500).json({ error: 'Erro ao buscar conteúdos.' });
     }
-    
-    // Renderiza a página com os dados recuperados
-    res.render('editInfoPage', { data: results });
+    res.json(results);  // Envia todos os conteúdos em formato JSON
   });
 });
 
-// Rota POST para salvar as alterações feitas pelo administrador
-app.post("/admin/edit-info", (req, res) => {
-  if (!req.session.user || !req.session.isAdmin) {
-    return res.status(403).render("error", { message: "Acesso negado." });
-  }
+// POST /conteudo — Para criar novo conteúdo (restrito a administradores)
+app.post('/conteudo', isAdmin, (req, res) => {
+  const { title, body, author } = req.body;
+  const query = 'INSERT INTO conteudo (title, body, author) VALUES (?, ?, ?)';
 
-  const { id, newName, newDescription, newPrice } = req.body;
-
-  const updateQuery = 'UPDATE menu_info SET name = ?, description = ?, price = ? WHERE id = ?';
-  db.query(updateQuery, [newName, newDescription, newPrice, id], (err, result) => {
+  db.query(query, [title, body, author], (err, result) => {
     if (err) {
-      return res.render("error", { message: "Erro ao atualizar informações." });
+      return res.status(500).json({ error: 'Erro ao adicionar conteúdo.' });
     }
-    res.redirect('/admin-dashboard');
+    res.status(201).json({ message: 'Conteúdo criado com sucesso!', id: result.insertId });
   });
 });
-// ============================
 
+// PUT /conteudo/:id — Para atualizar conteúdo existente (restrito a administradores)
+app.put('/conteudo/:id', isAdmin, (req, res) => {
+  const { title, body, author } = req.body;
+  const query = 'UPDATE conteudo SET title = ?, body = ?, author = ? WHERE id = ?';
+
+  db.query(query, [title, body, author, req.params.id], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: 'Erro ao atualizar conteúdo.' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Conteúdo não encontrado.' });
+    }
+    res.json({ message: 'Conteúdo atualizado com sucesso!' });
+  });
+});
+
+// DELETE /conteudo/:id — Para remover conteúdo (restrito a administradores)
+app.delete('/conteudo/:id', isAdmin, (req, res) => {
+  const query = 'DELETE FROM conteudo WHERE id = ?';
+  
+  db.query(query, [req.params.id], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: 'Erro ao deletar conteúdo.' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Conteúdo não encontrado.' });
+    }
+    res.json({ message: 'Conteúdo deletado com sucesso!' });
+  });
+});
+
+// ============================
 // Iniciar o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
