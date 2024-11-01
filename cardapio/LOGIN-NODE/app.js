@@ -140,6 +140,18 @@ app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "dashboard.html")); // Envia o arquivo index.html
 });
 
+// Rota para atualizar o produto
+app.post('/dashboard/editar', isAdmin, (req, res) => {
+  const { id, name, image } = req.body;
+  const query = 'UPDATE produtos SET name = ?, image = ? WHERE id = ?';
+  db.query(query, [name, image, id], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: 'Erro ao atualizar produto.' });
+    }
+    res.redirect('/dashboard');
+  });
+});
+
 // Rota para o dashboard do administrador
 app.get("/admin-dashboard", (req, res) => {
   if (!req.session.user || !req.session.isAdmin) {
