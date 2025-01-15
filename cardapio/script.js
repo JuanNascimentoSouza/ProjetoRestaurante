@@ -1,4 +1,6 @@
 let order = [];
+let freightCalculated = false; // Variável de controle para verificar se o frete já foi calculado
+
 
 function addItem(name, price, additional, additionalPrice, additional2, additionalPrice2, additional3, additionalPrice3, observation) {
     const quantity = 1;
@@ -144,6 +146,11 @@ function sendOrder() {
             message += `  Observação: ${item.observation}\n`;
         }
     });
+
+    // Adicionar o valor do frete ao total
+    let freightText = document.getElementById('result').innerText;
+    let freightValue = parseFloat(freightText.split('Frete: R$ ')[1].replace(',', '.'));
+    total += freightValue;
 
     message += `\nTotal: R$ ${total.toFixed(2)}`;
 
@@ -453,10 +460,15 @@ function preloadImagens() {
 }
 
 function calculateFreight() {
+    if (freightCalculated) {
+        console.log("O frete já foi calculado. Ignorando nova solicitação.");
+        return; // Sai da função se o frete já foi calculado
+    }
+
     console.log("Iniciando cálculo de frete...");
     const address = document.getElementById('address').value;
     const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
-    
+
     const geocoder = new google.maps.Geocoder();
 
     // Geocode do endereço do estabelecimento
@@ -483,6 +495,16 @@ function calculateFreight() {
                             const freight = calculateFreightValue(distance);
                             document.getElementById('result').innerText = `Distância: ${distance.toFixed(2)} km\nFrete: R$ ${freight.toFixed(2)}`;
                             console.log(`Distância: ${distance.toFixed(2)} km, Frete: R$ ${freight.toFixed(2)}`);
+
+                            // Atualizar o total do carrinho com o valor do frete
+                            let cartTotalElement = document.getElementById('cartTotal');
+                            let cartTotalText = cartTotalElement.innerText;
+                            let cartTotalValue = parseFloat(cartTotalText.replace('Total: R$', '').replace(',', '.'));
+                            let newTotal = cartTotalValue + freight;
+                            cartTotalElement.innerText = `Total: R$ ${newTotal.toFixed(2).replace('.', ',')}`;
+
+                            // Marcar que o frete foi calculado
+                            freightCalculated = true;
                         } else {
                             console.error('Erro ao calcular a distância:', status);
                             alert('Erro ao calcular a distância: ' + status);
@@ -498,6 +520,12 @@ function calculateFreight() {
             alert('Erro ao geocodificar o endereço do estabelecimento: ' + status);
         }
     });
+}
+
+function calculateFreightValue(distance) {
+    const fixedRate = 4;
+    const ratePerKm = 2;
+    return fixedRate + (ratePerKm * distance);
 }
 
 function calculateFreightValue(distance) {
