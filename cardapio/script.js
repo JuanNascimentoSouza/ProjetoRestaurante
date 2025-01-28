@@ -1,6 +1,4 @@
 let order = [];
-let freightCalculated = false; // Variável de controle para verificar se o frete já foi calculado
-
 
 function addItem(name, price, additional, additionalPrice, additional2, additionalPrice2, additional3, additionalPrice3, observation) {
     const quantity = 1;
@@ -115,51 +113,88 @@ function sendOrder() {
         return;
     }
 
-    let message = "Olá, gostaria de fazer o seguinte pedido:\n";
-    let total = 0;
+    // Cálculo do frete
+    const address = document.getElementById('address').value;
+    const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
+    const geocoder = new google.maps.Geocoder();
 
-    order.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        message += `- ${item.quantity} x ${item.name}: R$ ${itemTotal.toFixed(2)}\n`;
-        total += itemTotal;
+    geocoder.geocode({ 'address': establishmentAddress }, function(establishmentResults, status) {
+        if (status === 'OK') {
+            const origin = establishmentResults[0].geometry.location;
 
-        if (item.additional && item.additionalQuantity > 0) {
-            const additionalTotal = item.additionalPrice * item.additionalQuantity;
-            message += `  + ${item.additionalQuantity} x ${item.additional}: R$ ${additionalTotal.toFixed(2)}\n`;
-            total += additionalTotal;
-        }
+            // Geocode do endereço completo do usuário
+            geocoder.geocode({ 'address': address }, function(userResults, status) {
+                if (status === 'OK') {
+                    const destination = userResults[0].geometry.location;
+                    const service = new google.maps.DistanceMatrixService();
+                    service.getDistanceMatrix({
+                        origins: [origin],
+                        destinations: [destination],
+                        travelMode: 'DRIVING',
+                        unitSystem: google.maps.UnitSystem.METRIC
+                    }, function(response, status) {
+                        if (status === 'OK') {
+                            const distance = response.rows[0].elements[0].distance.value / 1000;
+                            const freight = calculateFreightValue(distance);  // Função que calcula o frete
+                            let message = "Olá, gostaria de fazer o seguinte pedido:\n";
+                            let total = 0;
 
-        if (item.additional2 && item.additionalQuantity2 > 0) {
-            const additionalTotal2 = item.additionalPrice2 * item.additionalQuantity2;
-            message += `  + ${item.additionalQuantity2} x ${item.additional2}: R$ ${additionalTotal2.toFixed(2)}\n`;
-            total += additionalTotal2;
-        }
+                            order.forEach(item => {
+                                const itemTotal = item.price * item.quantity;
+                                message += `- ${item.quantity} x ${item.name}: R$ ${itemTotal.toFixed(2)}\n`;
+                                total += itemTotal;
 
-        if (item.additional3 && item.additionalQuantity3 > 0) {
-            const additionalTotal3 = item.additionalPrice3 * item.additionalQuantity3;
-            message += `  + ${item.additionalQuantity3} x ${item.additional3}: R$ ${additionalTotal3.toFixed(2)}\n`;
-            total += additionalTotal3;
-        }
+                                if (item.additional && item.additionalQuantity > 0) {
+                                    const additionalTotal = item.additionalPrice * item.additionalQuantity;
+                                    message += `  + ${item.additionalQuantity} x ${item.additional}: R$ ${additionalTotal.toFixed(2)}\n`;
+                                    total += additionalTotal;
+                                }
 
-        // Adiciona a observação à mensagem, se houver
-        if (item.observation) {
-            message += `  Observação: ${item.observation}\n`;
+                                if (item.additional2 && item.additionalQuantity2 > 0) {
+                                    const additionalTotal2 = item.additionalPrice2 * item.additionalQuantity2;
+                                    message += `  + ${item.additionalQuantity2} x ${item.additional2}: R$ ${additionalTotal2.toFixed(2)}\n`;
+                                    total += additionalTotal2;
+                                }
+
+                                if (item.additional3 && item.additionalQuantity3 > 0) {
+                                    const additionalTotal3 = item.additionalPrice3 * item.additionalQuantity3;
+                                    message += `  + ${item.additionalQuantity3} x ${item.additional3}: R$ ${additionalTotal3.toFixed(2)}\n`;
+                                    total += additionalTotal3;
+                                }
+
+                                if (item.observation) {
+                                    message += `  Observação: ${item.observation}\n`;
+                                }
+                            });
+
+                            // Adiciona o frete à mensagem
+                            message += `\nFrete: R$ ${freight.toFixed(2)}`;
+                            total += freight;
+
+                            message += `\nTotal: R$ ${total.toFixed(2)}`;
+
+                            const whatsappNumber = "5521966454694";
+                            const encodedMessage = encodeURIComponent(message);
+                            const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+                            window.open(whatsappLink, '_blank');
+                        } else {
+                            console.error('Erro ao calcular a distância:', status);
+                            alert('Erro ao calcular a distância: ' + status);
+                        }
+                    });
+                } else {
+                    console.error('Erro ao geocodificar o endereço do cliente:', status);
+                    alert('Erro ao geocodificar o endereço do cliente: ' + status);
+                }
+            });
+        } else {
+            console.error('Erro ao geocodificar o endereço do estabelecimento:', status);
+            alert('Erro ao geocodificar o endereço do estabelecimento: ' + status);
         }
     });
-
-    // Adicionar o valor do frete ao total
-    let freightText = document.getElementById('result').innerText;
-    let freightValue = parseFloat(freightText.split('Frete: R$ ')[1].replace(',', '.'));
-    total += freightValue;
-
-    message += `\nTotal: R$ ${total.toFixed(2)}`;
-
-    const whatsappNumber = "5521966454694";
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-    window.open(whatsappLink, '_blank');
 }
+
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -460,28 +495,20 @@ function preloadImagens() {
 }
 
 function calculateFreight() {
-    if (freightCalculated) {
-        console.log("O frete já foi calculado. Ignorando nova solicitação.");
-        return; // Sai da função se o frete já foi calculado
-    }
-
-    console.log("Iniciando cálculo de frete...");
     const address = document.getElementById('address').value;
     const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
-
+    
     const geocoder = new google.maps.Geocoder();
 
     // Geocode do endereço do estabelecimento
     geocoder.geocode({ 'address': establishmentAddress }, function(establishmentResults, status) {
         if (status === 'OK') {
             const origin = establishmentResults[0].geometry.location;
-            console.log("Geocodificação do endereço do estabelecimento bem-sucedida:", origin);
 
-            // Geocode do endereço completo do usuário
+            // Geocode do endereço do usuário
             geocoder.geocode({ 'address': address }, function(userResults, status) {
                 if (status === 'OK') {
                     const destination = userResults[0].geometry.location;
-                    console.log("Geocodificação do endereço do cliente bem-sucedida:", destination);
 
                     const service = new google.maps.DistanceMatrixService();
                     service.getDistanceMatrix({
@@ -496,15 +523,6 @@ function calculateFreight() {
                             document.getElementById('result').innerText = `Distância: ${distance.toFixed(2)} km\nFrete: R$ ${freight.toFixed(2)}`;
                             console.log(`Distância: ${distance.toFixed(2)} km, Frete: R$ ${freight.toFixed(2)}`);
 
-                            // Atualizar o total do carrinho com o valor do frete
-                            let cartTotalElement = document.getElementById('cartTotal');
-                            let cartTotalText = cartTotalElement.innerText;
-                            let cartTotalValue = parseFloat(cartTotalText.replace('Total: R$', '').replace(',', '.'));
-                            let newTotal = cartTotalValue + freight;
-                            cartTotalElement.innerText = `Total: R$ ${newTotal.toFixed(2).replace('.', ',')}`;
-
-                            // Marcar que o frete foi calculado
-                            freightCalculated = true;
                         } else {
                             console.error('Erro ao calcular a distância:', status);
                             alert('Erro ao calcular a distância: ' + status);
@@ -520,12 +538,6 @@ function calculateFreight() {
             alert('Erro ao geocodificar o endereço do estabelecimento: ' + status);
         }
     });
-}
-
-function calculateFreightValue(distance) {
-    const fixedRate = 4;
-    const ratePerKm = 2;
-    return fixedRate + (ratePerKm * distance);
 }
 
 function calculateFreightValue(distance) {
