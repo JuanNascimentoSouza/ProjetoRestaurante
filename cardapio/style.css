@@ -1,8 +1,30 @@
 * {
     font-family: "Freeman", sans-serif;
     box-sizing: border-box;
-    background-color: #ffffff;
+    background-color: var(--background-color);
     touch-action: manipulation;
+}
+
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #28a745;
+    --background-color: #ffffff;
+    --text-color: #333;
+    --border-radius: 8px;
+}
+
+.button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--secondary-color);
 }
 
 img {
@@ -57,10 +79,8 @@ img {
 }
 
 .info {
-    width: 32px;
-    height: 32px;
-    position: relative;
-    left: 10px;
+    width: 24px; /* Reduzindo o tamanho */
+    height: 24px; /* Reduzindo o tamanho */
     cursor: pointer;
 }
 
@@ -77,10 +97,8 @@ img {
 }
 
 .share {
-    width: 32px;
-    height: 32px;
-    position: relative;
-    left: 13px;
+    width: 24px; /* Reduzindo o tamanho */
+    height: 24px; /* Reduzindo o tamanho */
     cursor: pointer;
     background: transparent;
 }
@@ -88,6 +106,12 @@ img {
 .share.changed {
     transition: background-color 0.3s ease;
     background-color: #c2a710;
+}
+
+/* Efeito de hover para os ícones */
+.info:hover, .share:hover {
+    opacity: 0.8; /* Efeito de transparência ao passar o mouse */
+    transition: opacity 0.3s ease;
 }
 
 .buttonVerMapa {
@@ -301,7 +325,7 @@ a {
 
 /* Muda a cor dos links quando o mouse passa sobre eles */
 a:hover {
-    color: rgb(255, 0, 0);
+    color: rgb(167, 167, 167);
     /* Cor ao passar o mouse */
     transform: scale(1.05);
 }
@@ -395,7 +419,7 @@ a:hover {
 }
 
 #cartItems button {
-    background-color: #ff4d4d;
+    background-color: #ff2424;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -404,7 +428,7 @@ a:hover {
 }
 
 #cartItems button:hover {
-    background-color: #ff1a1a;
+    background-color: #c0c0c0;
 }
 
 #cartItems ul {
@@ -427,6 +451,7 @@ a:hover {
 .link-container {
     justify-content: center;
     align-items: center;
+    justify-items: center;
     margin-top: 45px;
     display: flex;
     gap: 25px;
@@ -563,9 +588,7 @@ a:hover {
 
 
 .modal {
-
     display: none;
-    /* Inicialmente oculto */
     position: fixed;
     z-index: 1;
     left: 0;
@@ -574,26 +597,17 @@ a:hover {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
-
 }
 
 
 .modal-content {
-
-    background-color: #ffffff;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    max-width: 500px;
     margin: auto;
-    margin-top: 120px;
-    padding: 0px;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 30px;
-
-
+    position: relative;
 }
-
 
 
 .modal-left {
@@ -653,11 +667,11 @@ li:hover {
 }
 
 
-span.close {
-    color: red;
-    font-size: 37px;
-    background-color: #fff5f5;
-    background: transparent;
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 24px;
     cursor: pointer;
 }
 
@@ -680,22 +694,29 @@ span.close {
 }
 
 #addToCartButton {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #28a745;
     border: none;
-    padding: 15px 30px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    bottom: 60px;
+    font-size: 16px;
+}
+
+#addToCartButton:hover {
+    background-color: #218838;
 }
 
 .popupSpaceBetween {
-    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#itemName {
+    font-size: 24px;
+    margin: 10px 0;
 }
 
 #itemName {
@@ -706,24 +727,23 @@ span.close {
     text-align: center
 }
 
+#itemImage {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+}
+
 #itemDescription {
-    font-size: 12px;
-    line-height: 1.2 !important;
-    line-break: anywhere;
-    text-align: left;
-    font-weight: 300;
-    word-break: break-word;
-    text-transform: lowercase;
-    color: #65181880;
-    text-align: center;
+    font-size: 16px;
+    color: #696767;
+    justify-content: center;
+    display: flex;
 }
 
 .namePrice {
-    color: var(--font-color);
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
+    font-size: 18px;
+    color: #333;
 }
 
 #itemPrice {
@@ -746,14 +766,44 @@ span.close {
     transition: none 0.3s ease;
 }
 
-.inputPopup {
-    width: 30px;
+.inputPopup1, .inputPopup2, .inputPopup3 {
+    margin: 20px 0;
+}
 
+.inputPopup {
+    width: 50px;
+    text-align: center;
+    margin: 0 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 .stylePopupInput {
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
+}
+
+.stylePopupInput {
+    font-size: 18px;
+    margin: 0;
+    flex: 1;
+}
+
+.buttonMinus, .buttonPlus, .buttonMinus2, .buttonPlus2, .buttonMinus3, .buttonPlus3 {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.buttonMinus img, .buttonPlus img, .buttonMinus2 img, .buttonPlus2 img, .buttonMinus3 img, .buttonPlus3 img {
+    width: 20px;
+    height: 20px;
 }
 
 .buttonPlus {
@@ -853,25 +903,24 @@ span.close {
 }
 
 .additionalPriceStyle {
-    color: var(--font-color);
-    font-weight: 600;
     font-size: 16px;
-    line-height: 20px;
-    text-align: center;
+    color: #333;
+    margin: 0 10px;
 }
 
 .observation {
-    display: flex;
-    line-height: 22px;
     font-size: 16px;
-    text-align: center;
+    margin: 20px 0 10px;
+    display: block;
 }
 
 .observation2 {
-    display: flex;
-    line-height: 22px;
-    font-size: 16px;
-    text-align: center;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: vertical;
 }
 
 .frete {
@@ -1030,31 +1079,20 @@ span.close {
     }
 }
 
-@media (min-width: 768px) {
-    .logoHeader {
-        width: 130px;
-        height: 130px;
-        left: 24%;
-        top: 9%;
-    }
-
-    .text-overlay h1,
-    .text-overlay h2 {
-        font-size: 1.4em;
-    }
-
-    .displayFlexUl {
-        display: grid;
-        flex-direction: column;
+@media (max-width: 768px) {
+    .gridProducts {
+        width: 100%;
+        margin-bottom: 10px;
     }
 
     .link-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        justify-items: center;
-        border-radius: 11px;
-        padding: 5px;
-        border: 0px solid #ddd;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .buttonVerMapa {
+        width: 100%;
+        text-align: center;
     }
 }
 

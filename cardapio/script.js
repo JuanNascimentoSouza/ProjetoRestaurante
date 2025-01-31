@@ -42,6 +42,22 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+// Função para abrir o modal
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+// Função para fechar o modal
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
 function openCartPopup() {
     const cartPopup = document.getElementById('cartPopup');
     cartPopup.style.display = 'block';
@@ -406,20 +422,20 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// Abre o popup de informações
-document.getElementById('infoPopup').addEventListener('click', function() {
-    document.getElementById('infoModal').style.display = 'block';
+// Adicionar evento de clique para abrir o modal de informações
+document.getElementById('infoPopup').addEventListener('click', () => {
+    openModal('infoModal');
 });
 
-// Fecha o popup de informações
-document.getElementById('closeInfo').addEventListener('click', function() {
-    document.getElementById('infoModal').style.display = 'none';
+// Adicionar evento de clique para fechar o modal de informações
+document.getElementById('closeInfo').addEventListener('click', () => {
+    closeModal('infoModal');
 });
 
-// Fecha o popup se o usuário clicar fora do conteúdo do popup
-window.addEventListener('click', function(event) {
-    if (event.target == document.getElementById('infoModal')) {
-        document.getElementById('infoModal').style.display = 'none';
+// Adicionar evento de clique para fechar o modal ao clicar fora dele
+window.addEventListener('click', (event) => {
+    if (event.target.classList.contains('modal')) {
+        closeModal(event.target.id);
     }
 });
 
