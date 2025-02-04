@@ -1,4 +1,6 @@
 let order = [];
+let isFreightCalculated = false; // Estado para controlar se o frete foi calculado
+
 
 function addItem(name, price, additional, additionalPrice, additional2, additionalPrice2, additional3, additionalPrice3, observation) {
     const quantity = 1;
@@ -40,6 +42,21 @@ document.addEventListener("DOMContentLoaded", function() {
             closeCartPopup();
         }
     });
+
+    // Desabilitar o botão de enviar pedido inicialmente
+    const sendOrderButton = document.getElementById('sendOrderButton');
+    sendOrderButton.disabled = true;
+
+    // Adicionar evento de clique ao botão "Calcular Frete"
+    const calculateFreightButton = document.getElementById('calculateFreightButton');
+    calculateFreightButton.addEventListener('click', function() {
+        calculateFreight();
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const sendOrderButton = document.getElementById('sendOrderButton');
+    sendOrderButton.disabled = false; // Desabilita o botão inicialmente
 });
 
 // Função para abrir o modal
@@ -49,6 +66,7 @@ function openModal(modalId) {
         modal.style.display = 'block';
     }
 }
+
 
 // Função para fechar o modal
 function closeModal(modalId) {
@@ -62,7 +80,14 @@ function openCartPopup() {
     const cartPopup = document.getElementById('cartPopup');
     cartPopup.style.display = 'block';
     updateCart();
+
+    // Verificar se o frete já foi calculado e habilitar o botão, se necessário
+    const sendOrderButton = document.getElementById('sendOrderButton');
+    if (isFreightCalculated) {
+        sendOrderButton.disabled = false;
+    }
 }
+
 
 function updateCart() {
     const cartItemsElement = document.getElementById('cartItems');
@@ -118,12 +143,20 @@ function updateCart() {
     document.getElementById('cartTotal').textContent = `Total: R$ ${total.toFixed(2)}`;
 }
 
+
 function removeItem(index) {
     order.splice(index, 1);
     updateCart();
 }
 
 async function sendOrder() {
+    console.log("Verificando se o frete foi calculado...");
+    if (!isFreightCalculated) {
+        console.log("Frete não calculado. Exibindo alerta...");
+        alert("Por favor, calcule o frete antes de enviar o pedido.");
+        return;
+    }
+
     if (order.length === 0) {
         alert("Seu pedido está vazio.");
         return;
@@ -131,21 +164,38 @@ async function sendOrder() {
 
     try {
         const address = document.getElementById('address').value;
+        if (!address) {
+            alert("Por favor, insira um endereço válido.");
+            return;
+        }
+
         const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
 
+        console.log("Geocodificando endereço do estabelecimento...");
         const origin = await geocodeAddress(establishmentAddress);
-        const destination = await geocodeAddress(address);
+        console.log("Endereço do estabelecimento geocodificado:", origin);
 
+        console.log("Geocodificando endereço do cliente...");
+        const destination = await geocodeAddress(address);
+        console.log("Endereço do cliente geocodificado:", destination);
+
+        console.log("Calculando distância...");
         const distance = await calculateDistance(origin, destination);
+        console.log("Distância calculada:", distance);
+
         const freight = calculateFreightValue(distance);
+        console.log("Frete calculado:", freight);
 
         const message = buildOrderMessage(order, freight);
+        console.log("Mensagem do pedido:", message);
+
         const whatsappLink = `https://wa.me/5521966454694?text=${encodeURIComponent(message)}`;
+        console.log("Link do WhatsApp:", whatsappLink);
 
         window.open(whatsappLink, '_blank');
     } catch (error) {
         console.error('Erro ao enviar pedido:', error);
-        alert('Erro ao enviar pedido. Tente novamente.');
+        alert('Erro ao enviar pedido. Verifique o endereço e tente novamente.');
     }
 }
 
@@ -162,6 +212,58 @@ async function geocodeAddress(address) {
     });
 }
 
+function calculateFreight() {
+    const address = document.getElementById('address').value;
+    const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
+    
+    const geocoder = new google.maps.Geocoder();
+
+    // Geocode do endereço do estabelecimento
+    geocoder.geocode({ 'address': establishmentAddress }, function(establishmentResults, status) {
+        if (status === 'OK') {
+            const origin = establishmentResults[0].geometry.location;
+
+            // Geocode do endereço do usuário
+            geocoder.geocode({ 'address': address }, function(userResults, status) {
+                if (status === 'OK') {
+                    const destination = userResults[0].geometry.location;
+
+                    const service = new google.maps.DistanceMatrixService();
+                    service.getDistanceMatrix({
+                        origins: [origin],
+                        destinations: [destination],
+                        travelMode: 'DRIVING',
+                        unitSystem: google.maps.UnitSystem.METRIC
+                    }, function(response, status) {
+                        if (status === 'OK') {
+                            const distance = response.rows[0].elements[0].distance.value / 1000;
+                            const freight = calculateFreightValue(distance);
+                            document.getElementById('result').innerText = `Distância: ${distance.toFixed(2)} km\nFrete: R$ ${freight.toFixed(2)}`;
+                            console.log(`Distância: ${distance.toFixed(2)} km, Frete: R$ ${freight.toFixed(2)}`);
+
+                            // Habilitar o botão de enviar pedido
+                            const sendOrderButton = document.getElementById('sendOrderButton');
+                            sendOrderButton.disabled = false;
+                            isFreightCalculated = true; // Atualizar o estado do frete
+
+                        } else {
+                            console.error('Erro ao calcular a distância:', status);
+                            alert('Erro ao calcular a distância: ' + status);
+                        }
+                    });
+                } else {
+                    console.error('Erro ao geocodificar o endereço do cliente:', status);
+                    alert('Erro ao geocodificar o endereço do cliente: ' + status);
+                }
+            });
+        } else {
+            console.error('Erro ao geocodificar o endereço do estabelecimento:', status);
+            alert('Erro ao geocodificar o endereço do estabelecimento: ' + status);
+        }
+    });
+}
+
+
 async function calculateDistance(origin, destination) {
     const service = new google.maps.DistanceMatrixService();
     return new Promise((resolve, reject) => {
@@ -172,13 +274,15 @@ async function calculateDistance(origin, destination) {
             unitSystem: google.maps.UnitSystem.METRIC
         }, (response, status) => {
             if (status === 'OK') {
-                resolve(response.rows[0].elements[0].distance.value / 1000);
+                const distance = response.rows[0].elements[0].distance.value / 1000;
+                resolve(distance);
             } else {
                 reject(new Error('Erro ao calcular a distância: ' + status));
             }
         });
     });
 }
+
 
 function buildOrderMessage(order, freight) {
     let message = "Olá, gostaria de fazer o seguinte pedido:\n";
@@ -439,21 +543,6 @@ window.addEventListener('click', (event) => {
     }
 });
 
-document.getElementById('copyImage').addEventListener('click', function() {
-    const url = window.location.href;
-    const tempInput = document.createElement('input');
-    tempInput.style.position = 'absolute';
-    tempInput.style.left = '-9999px';
-    tempInput.value = url;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    tempInput.setSelectionRange(0, 99999);
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-    const messageElement = document.getElementById('message');
-    messageElement.textContent = 'URL copiada para a área de transferência!';
-});
-
 window.addEventListener('scroll', function() {
     const stickyElement = document.getElementById('stickyElement');
     const stickyContainer = document.querySelector('.sticky-container');
@@ -512,12 +601,10 @@ function calculateFreight() {
     
     const geocoder = new google.maps.Geocoder();
 
-    // Geocode do endereço do estabelecimento
     geocoder.geocode({ 'address': establishmentAddress }, function(establishmentResults, status) {
         if (status === 'OK') {
             const origin = establishmentResults[0].geometry.location;
 
-            // Geocode do endereço do usuário
             geocoder.geocode({ 'address': address }, function(userResults, status) {
                 if (status === 'OK') {
                     const destination = userResults[0].geometry.location;
@@ -533,8 +620,11 @@ function calculateFreight() {
                             const distance = response.rows[0].elements[0].distance.value / 1000;
                             const freight = calculateFreightValue(distance);
                             document.getElementById('result').innerText = `Distância: ${distance.toFixed(2)} km\nFrete: R$ ${freight.toFixed(2)}`;
-                            console.log(`Distância: ${distance.toFixed(2)} km, Frete: R$ ${freight.toFixed(2)}`);
 
+                            // Habilitar o botão de enviar pedido
+                            const sendOrderButton = document.getElementById('sendOrderButton');
+                            sendOrderButton.disabled = false;
+                            isFreightCalculated = true; // Atualizar o estado do frete
                         } else {
                             console.error('Erro ao calcular a distância:', status);
                             alert('Erro ao calcular a distância: ' + status);

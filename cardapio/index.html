@@ -2,8 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio Online</title>
@@ -12,17 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Freeman&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/mozedlogo.png">
-
-
 </head>
 
-
 <body>
-
-
-
     <div class="main-content">
-
         <header class="mainHeader">
             <div class="alignImage">
                 <img class="imageHeader" src="assets/mozerd_capa.png" alt="Capa da Mozed Hamburgueria">
@@ -42,9 +33,6 @@
                 <button id="infoPopup" aria-label="Informações">
                     <img class="info" src="assets/icons8-info-50.png" alt="Ícone de informações">
                 </button>
-                <!--<button id="copyImage" aria-label="Compartilhar">
-                    <img class="share" src="assets/icons8-share-48.png" alt="Ícone de compartilhar">
-                </button>-->
             </div>
             <p id="message" style="display: none;"></p>
             <div class="estiloButton">
@@ -52,9 +40,7 @@
             </div>
         </header>
 
-
         <section class="entradas">
-
             <div class="sticky-container">
                 <div class="sticky-element" id="stickyElement">
                     <div class="link-container">
@@ -420,62 +406,55 @@
 
                 <!-- Repetição para outras seções -->
 
-                <div id="itemModal" class="modal">
-                    <div class="modal-content" id="itemModal">
-                        <span id="closeItem" class="close">&times;</span>
-                        <img id="itemImage" src="" alt="Imagem do item">
-                        <h1 id="itemName"></h1>
-                        <p id="itemDescription">Descrição do item</p>
-                        <div class="inputPopup1">
-                            <div class="stylePopupInput" id="inputHide">
-                                <h3 id="itemAddicionalDescription"></h3>
-                                <button class="buttonMinus"><img src="assets/icons8-minus-50.png" alt=""></button>
-                                <input id="itemAdditional" class="inputPopup" disabled type="number" min="0" max="2">
-                                <button class="buttonPlus"><img src="assets/icons8-plus-50.png" alt=""></button>
-                                <p id="additionalPrice" class="additionalPriceStyle"></p>
-                            </div>
-                        </div> <!-- Adicionar os novos elementos -->
-                        <div class="inputPopup2">
-                            <div class="stylePopupInput" id="inputHide2">
-                                <h3 id="itemAddicionalDescription2"></h3>
-                                <button class="buttonMinus2"><img src="assets/icons8-minus-50.png" alt=""></button>
-                                <input id="itemAdditional2" class="inputPopup" disabled type="number" min="0" max="2">
-                                <button class="buttonPlus2"><img src="assets/icons8-plus-50.png" alt=""></button>
-                                <p id="additionalPrice2" class="additionalPriceStyle"></p>
-                                <h3 id="itemAddicionalDescription"></h3>
-                            </div>
-                        </div>
-                        <!-- Novo inputStylePopup -->
-                        <div class="inputPopup3">
-                            <div class="stylePopupInput" id="inputHide3">
-                                <h3 id="itemAddicionalDescription3"></h3>
-                                <button class="buttonMinus3"><img src="assets/icons8-minus-50.png" alt=""></button>
-                                <input id="itemAdditional3" class="inputPopup" disabled type="number" min="0" max="2">
-                                <button class="buttonPlus3"><img src="assets/icons8-plus-50.png" alt=""></button>
-                                <p id="additionalPrice3" class="additionalPriceStyle"></p>
-                            </div>
-                        </div>
-                        <br>
-                        <!-- Campo de observação no itemModal -->
-                        <label class="observation" for="itemObservation">Observações:</label>
-                        <textarea class="observation2" id="itemObservation"
-                            placeholder="Adicione alguma observação..."></textarea>
-                        <div class="popupSpaceBetween">
-                            <p class="namePrice">Preço: R$ <span id="itemPrice"></span></p>
-                            <button id="addToCartButton">Adicionar ao carrinho</button>
+            <!-- Modal de detalhes do item -->
+            <div id="itemModal" class="modal">
+                <div class="modal-content">
+                    <span id="closeItem" class="close">&times;</span>
+                    <img id="itemImage" src="" alt="Imagem do item">
+                    <h1 id="itemName"></h1>
+                    <p id="itemDescription">Descrição do item</p>
+                    <div class="inputPopup1">
+                        <div class="stylePopupInput" id="inputHide">
+                            <h3 id="itemAddicionalDescription"></h3>
+                            <button class="buttonMinus"><img src="assets/icons8-minus-50.png" alt=""></button>
+                            <input id="itemAdditional" class="inputPopup" disabled type="number" min="0" max="2">
+                            <button class="buttonPlus"><img src="assets/icons8-plus-50.png" alt=""></button>
+                            <p id="additionalPrice" class="additionalPriceStyle"></p>
                         </div>
                     </div>
+                    <div class="inputPopup2">
+                        <div class="stylePopupInput" id="inputHide2">
+                            <h3 id="itemAddicionalDescription2"></h3>
+                            <button class="buttonMinus2"><img src="assets/icons8-minus-50.png" alt=""></button>
+                            <input id="itemAdditional2" class="inputPopup" disabled type="number" min="0" max="2">
+                            <button class="buttonPlus2"><img src="assets/icons8-plus-50.png" alt=""></button>
+                            <p id="additionalPrice2" class="additionalPriceStyle"></p>
+                        </div>
+                    </div>
+                    <div class="inputPopup3">
+                        <div class="stylePopupInput" id="inputHide3">
+                            <h3 id="itemAddicionalDescription3"></h3>
+                            <button class="buttonMinus3"><img src="assets/icons8-minus-50.png" alt=""></button>
+                            <input id="itemAdditional3" class="inputPopup" disabled type="number" min="0" max="2">
+                            <button class="buttonPlus3"><img src="assets/icons8-plus-50.png" alt=""></button>
+                            <p id="additionalPrice3" class="additionalPriceStyle"></p>
+                        </div>
+                    </div>
+                    <br>
+                    <label class="observation" for="itemObservation">Observações:</label>
+                    <textarea class="observation2" id="itemObservation" placeholder="Adicione alguma observação..."></textarea>
+                    <div class="popupSpaceBetween">
+                        <p class="namePrice">Preço: R$ <span id="itemPrice"></span></p>
+                        <button id="addToCartButton">Adicionar ao carrinho</button>
+                    </div>
                 </div>
-
+            </div>
         </section>
     </div>
 
     <footer>
-        <button id="sendOrder" onclick="sendOrder()">Enviar Pedido via WhatsApp</button>
-
-        <img id="openCartButton" src="assets/icons8-cart-64.png" alt="carrinho" onmouseover="hoverImage()"
-            onmouseout="normalImage()" onclick="openCartPopup()">
-
+        <button id="sendOrderButton" onclick="sendOrder()">Enviar Pedido via WhatsApp</button>
+        <img id="openCartButton" src="assets/icons8-cart-64.png" alt="carrinho"  onclick="openCartPopup()">
     </footer>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_ImmW2VVZ-Urj7XCtzhpKHXDbt7-0PTc&callback=initMap" async defer></script>
     <!-- Popup do carrinho -->
@@ -485,23 +464,17 @@
             <h2>Carrinho de Compras</h2>
             <ul id="cartItems"></ul>
             <p id="cartTotal">Total: R$ 0,00</p>
-            
             <div class="frete">
-
                 <h1>Calculador de Frete</h1>
-
                 <label for="address">Digite seu endereço completo:</label>
-
                 <input type="text" id="address" placeholder="Rua, número, cidade, estado, CEP">
-
-                <button onclick="calculateFreight()">Calcular Frete</button>
-
+                <button id="calculateFreightButton">Calcular Frete</button>
                 <div id="result"></div>
-
             </div>
         </div>
     </div>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_ImmW2VVZ-Urj7XCtzhpKHXDbt7-0PTc&callback=initMap" async defer></script>
     <script src="script.js"></script>
 </body>
 
