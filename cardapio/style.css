@@ -98,6 +98,10 @@ img {
     cursor: pointer;
 }
 
+#infoPopup{
+    border: none;
+}
+
 .descriptionInfo {
     font-size: 12px;
     line-height: 1.2 !important;
