@@ -368,7 +368,7 @@ a:hover {
 .cart-popup ul {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin: -10px;
     max-height: 200px;
     overflow-y: auto; /* Rolagem se a lista for longa */
     overflow-x: hidden;
@@ -379,7 +379,7 @@ a:hover {
 .cart-popup ul li {
     padding: 10px;
     border-bottom: 1px solid #ddd;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .cart-popup p {
@@ -420,17 +420,20 @@ a:hover {
 
 #cartItems {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
+    padding: 1px;
+    
 }
 
 #cartItems li {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    white-space: normal;       /* Permite que o texto quebre automaticamente */
+    word-wrap: break-word;     /* Quebra palavras muito longas se necessário */
+    overflow-wrap: break-word; /* Propriedade equivalente (suporte mais moderno) */
 }
 
 #cartItems li span {
@@ -455,6 +458,20 @@ a:hover {
     display: flex !important;
 
 }
+
+#popup {
+    display: none; /* oculto inicialmente */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* acima do overlay */
+    background: #fff;
+    padding: 20px;
+    max-width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
 
 #hamburgueres {
 
@@ -609,23 +626,35 @@ a:hover {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    overflow-y: auto; /* Permite scroll no popup */
 }
+
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
 
 
 .modal-content {
-    padding: 20px;
-    background-color: var(--background-color);
-    border-radius: var(--border-radius);
-    max-width: 500px;
-    margin: auto;
     position: relative;
+    background: white;
+    margin: 5% auto;
+    padding: 20px;
+    max-width: 600px;
+    max-height: 90vh; /* Altura máxima */
+    overflow-y: auto; /* Scroll interno */
+    border-radius: 8px;
+}
+
+.modal-content {
+  z-index: 1001;
 }
 
 
@@ -1225,4 +1254,10 @@ li:hover {
     li {
         padding: 30px;
     }
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  .modal {
+    padding-right: 15px; /* Compensa a barra de scroll */
+  }
 }

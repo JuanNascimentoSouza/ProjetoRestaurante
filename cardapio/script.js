@@ -27,7 +27,7 @@ function addItem(name, price, additional, additionalPrice, additional2, addition
     order.push(item);
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const closeCartButton = document.getElementById('closeCartPopup');
     const cartPopup = document.getElementById('cartPopup');
 
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     closeCartButton.addEventListener('click', closeCartPopup);
 
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (event.target == cartPopup) {
             closeCartPopup();
         }
@@ -49,12 +49,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Adicionar evento de clique ao botão "Calcular Frete"
     const calculateFreightButton = document.getElementById('calculateFreightButton');
-    calculateFreightButton.addEventListener('click', function() {
+    calculateFreightButton.addEventListener('click', function () {
         calculateFreight();
     });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const sendOrderButton = document.getElementById('sendOrderButton');
     sendOrderButton.disabled = false; // Desabilita o botão inicialmente
 });
@@ -69,12 +69,28 @@ function openModal(modalId) {
 
 
 // Função para fechar o modal
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'none';
+function closeModal() {
+    // Restaura o scroll primeiro
+    const scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.classList.remove('modal-open');
+    document.getElementById("itemObservation").value = '';
+    
+    if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
+    
+    // Fecha todos os modais
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+    });
 }
+
+document.getElementById('closeItem').addEventListener('click', closeModal);
+document.getElementById('closeInfo').addEventListener('click', closeModal);
+document.getElementById('closeCartPopup').addEventListener('click', closeModal);
+
 
 function openCartPopup() {
     const cartPopup = document.getElementById('cartPopup');
@@ -89,6 +105,11 @@ function openCartPopup() {
 }
 
 
+// Função que insere uma quebra de linha a cada maxChars caracteres
+function insertLineBreaks(text, maxChars) {
+    return text.replace(new RegExp(`(.{${maxChars}})`, 'g'), '$1<br>');
+}
+
 function updateCart() {
     const cartItemsElement = document.getElementById('cartItems');
     cartItemsElement.innerHTML = '';
@@ -99,50 +120,65 @@ function updateCart() {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
 
+        // Cria o li e insere as informações iniciais (sem o botão)
         const listItem = document.createElement('li');
         listItem.innerHTML = `
-            ${item.quantity} x ${item.name}: R$ ${itemTotal.toFixed(2)}
-            <button onclick="removeItem(${index})">Remover</button>
-        `;
+              ${item.quantity} x ${item.name}: R$ ${itemTotal.toFixed(2)}
+          `;
 
+        // Adiciona informações adicionais, se houver
         if (item.additional && item.additionalQuantity > 0) {
             const additionalTotal = item.additionalPrice * item.additionalQuantity;
             total += additionalTotal;
+            // Aqui aplicamos a função para inserir quebras de linha (a cada 50 caracteres, por exemplo)
+            const formattedAdditional = insertLineBreaks(item.additional, 50);
             listItem.innerHTML += `
-                <br>
-                + ${item.additionalQuantity} x ${item.additional}: R$ ${additionalTotal.toFixed(2)}
-            `;
+                  <br>
+                  + ${item.additionalQuantity} x ${formattedAdditional}: R$ ${additionalTotal.toFixed(2)}
+              `;
         }
 
         if (item.additional2 && item.additionalQuantity2 > 0) {
             const additionalTotal2 = item.additionalPrice2 * item.additionalQuantity2;
             total += additionalTotal2;
+            // Também formatamos additional2, se desejar
+            const formattedAdditional2 = insertLineBreaks(item.additional2, 50);
             listItem.innerHTML += `
-                <br>
-                + ${item.additionalQuantity2} x ${item.additional2}: R$ ${additionalTotal2.toFixed(2)}
-            `;
+                  <br>
+                  + ${item.additionalQuantity2} x ${formattedAdditional2}: R$ ${additionalTotal2.toFixed(2)}
+              `;
         }
 
         if (item.additional3 && item.additionalQuantity3 > 0) {
             const additionalTotal3 = item.additionalPrice3 * item.additionalQuantity3;
             total += additionalTotal3;
+            // Formata additional3
+            const formattedAdditional3 = insertLineBreaks(item.additional3, 50);
             listItem.innerHTML += `
-                <br>
-                + ${item.additionalQuantity3} x ${item.additional3}: R$ ${additionalTotal3.toFixed(2)}
-            `;
+                  <br>
+                  + ${item.additionalQuantity3} x ${formattedAdditional3}: R$ ${additionalTotal3.toFixed(2)}
+              `;
         }
 
-        // Exibir observação, se houver
+        // Exibe observação, se houver, aplicando a quebra de linha a cada 50 caracteres
         if (item.observation) {
-            listItem.innerHTML += `<br><strong>Observação:</strong> ${item.observation}`;
+            const formattedObservation = insertLineBreaks(item.observation, 50);
+            listItem.innerHTML += `<br><strong>Observação:</strong> ${formattedObservation}`;
         }
+
+        // Cria o botão "Remover" separadamente e o adiciona após todo o conteúdo
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remover';
+        removeButton.onclick = function () {
+            removeItem(index);
+        };
+        listItem.appendChild(removeButton);
 
         cartItemsElement.appendChild(listItem);
     });
 
     document.getElementById('cartTotal').textContent = `Total: R$ ${total.toFixed(2)}`;
 }
-
 
 function removeItem(index) {
     order.splice(index, 1);
@@ -215,16 +251,16 @@ async function geocodeAddress(address) {
 function calculateFreight() {
     const address = document.getElementById('address').value;
     const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
-    
+
     const geocoder = new google.maps.Geocoder();
 
     // Geocode do endereço do estabelecimento
-    geocoder.geocode({ 'address': establishmentAddress }, function(establishmentResults, status) {
+    geocoder.geocode({ 'address': establishmentAddress }, function (establishmentResults, status) {
         if (status === 'OK') {
             const origin = establishmentResults[0].geometry.location;
 
             // Geocode do endereço do usuário
-            geocoder.geocode({ 'address': address }, function(userResults, status) {
+            geocoder.geocode({ 'address': address }, function (userResults, status) {
                 if (status === 'OK') {
                     const destination = userResults[0].geometry.location;
 
@@ -234,7 +270,7 @@ function calculateFreight() {
                         destinations: [destination],
                         travelMode: 'DRIVING',
                         unitSystem: google.maps.UnitSystem.METRIC
-                    }, function(response, status) {
+                    }, function (response, status) {
                         if (status === 'OK') {
                             const distance = response.rows[0].elements[0].distance.value / 1000;
                             const freight = calculateFreightValue(distance);
@@ -311,9 +347,11 @@ function buildOrderMessage(order, freight) {
     return message;
 }
 
+document.getElementById("itemObservation").value = ''; 
 
 
-document.addEventListener("DOMContentLoaded", function() {
+
+document.addEventListener("DOMContentLoaded", function () {
     const buttonMinus = document.querySelector('.buttonMinus');
     const buttonPlus = document.querySelector('.buttonPlus');
     const itemAdditional = document.getElementById('itemAdditional');
@@ -326,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const buttonPlus3 = document.querySelector('.buttonPlus3');
     const itemAdditional3 = document.getElementById('itemAdditional3');
 
-    buttonMinus.addEventListener('click', function() {
+    buttonMinus.addEventListener('click', function () {
         let currentValue = parseInt(itemAdditional.value);
         if (currentValue > parseInt(itemAdditional.min)) {
             itemAdditional.value = currentValue - 1;
@@ -334,7 +372,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    buttonPlus.addEventListener('click', function() {
+    buttonPlus.addEventListener('click', function () {
         let currentValue = parseInt(itemAdditional.value);
         if (currentValue < parseInt(itemAdditional.max)) {
             itemAdditional.value = currentValue + 1;
@@ -342,7 +380,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    buttonMinus2.addEventListener('click', function() {
+    buttonMinus2.addEventListener('click', function () {
         let currentValue = parseInt(itemAdditional2.value);
         if (currentValue > parseInt(itemAdditional2.min)) {
             itemAdditional2.value = currentValue - 1;
@@ -350,7 +388,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    buttonPlus2.addEventListener('click', function() {
+    buttonPlus2.addEventListener('click', function () {
         let currentValue = parseInt(itemAdditional2.value);
         if (currentValue < parseInt(itemAdditional2.max)) {
             itemAdditional2.value = currentValue + 1;
@@ -358,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    buttonMinus3.addEventListener('click', function() {
+    buttonMinus3.addEventListener('click', function () {
         let currentValue = parseInt(itemAdditional3.value);
         if (currentValue > parseInt(itemAdditional3.min)) {
             itemAdditional3.value = currentValue - 1;
@@ -366,7 +404,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    buttonPlus3.addEventListener('click', function() {
+    buttonPlus3.addEventListener('click', function () {
         let currentValue = parseInt(itemAdditional3.value);
         if (currentValue < parseInt(itemAdditional3.max)) {
             itemAdditional3.value = currentValue + 1;
@@ -432,10 +470,30 @@ function openItemDetails(name, price, image, description, additional, additional
         document.getElementById("inputHide3").style.display = 'none';
     }
 
-    modal.style.display = "block";
+    const scrollY = window.scrollY;
+    document.body.style.top = `-${scrollY}px`;
+
+    // Adiciona classes de bloqueio
+    document.body.classList.add('modal-open');
+    document.getElementById('itemModal').style.display = 'block';
+        document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.classList.add('modal-open');
+
+    //Limpa a observação
+    document.getElementById("itemObservation").value = '';
+
+    modal.style.display = 'flex';
 }
 
-document.getElementById('addToCartButton').addEventListener('click', function() {
+// Impede scroll no overlay fora do conteúdo
+document.querySelector('.modal').addEventListener('touchmove', e => {
+    if (!e.target.closest('.modal-content')) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+document.getElementById('addToCartButton').addEventListener('click', function () {
     const itemName = document.getElementById("itemName").innerText;
     const itemPrice = parseFloat(document.getElementById("itemPrice").dataset.basePrice);
     const itemAdditionalDescription = document.getElementById("itemAddicionalDescription").innerText;
@@ -446,8 +504,17 @@ document.getElementById('addToCartButton').addEventListener('click', function() 
     const additionalPrice3 = parseFloat(document.getElementById("additionalPrice3").dataset.price);
     const itemObservation = document.getElementById("itemObservation").value; // Captura a observação
 
+    document.getElementById("itemObservation").value = '';
+
     addItem(itemName, itemPrice, itemAdditionalDescription, additionalPrice, itemAdditionalDescription2, additionalPrice2, itemAdditionalDescription3, additionalPrice3, itemObservation);
     document.getElementById("itemModal").style.display = "none";
+    closeModal();
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target.classList.contains('modal')) {
+        closeModal();
+    }
 });
 
 function updateAdditionalPrice() {
@@ -472,14 +539,14 @@ function updateAdditionalPrice() {
     document.getElementById("itemPrice").innerText = total.toFixed(2);
 }
 
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const modal = document.getElementById("itemModal");
     if (event.target === modal) {
         modal.style.display = "none";
     }
 });
 
-document.getElementById('closeItem').addEventListener('click', function() {
+document.getElementById('closeItem').addEventListener('click', function () {
     document.getElementById("itemModal").style.display = "none";
 });
 
@@ -511,15 +578,15 @@ function showInputs(popupClass, inputId, descriptionId, additional) {
 }
 
 // Fechar modal ao clicar no "x" ou fora do popup
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const closeItemModalButton = document.getElementById('closeItem');
     const itemModal = document.getElementById('itemModal');
 
-    closeItemModalButton.addEventListener('click', function() {
+    closeItemModalButton.addEventListener('click', function () {
         itemModal.style.display = 'none';
     });
 
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (event.target == itemModal) {
             itemModal.style.display = 'none';
         }
@@ -543,7 +610,7 @@ window.addEventListener('click', (event) => {
     }
 });
 
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const stickyElement = document.getElementById('stickyElement');
     const stickyContainer = document.querySelector('.sticky-container');
     const offsetTop = stickyContainer.offsetTop;
@@ -598,14 +665,14 @@ function preloadImagens() {
 function calculateFreight() {
     const address = document.getElementById('address').value;
     const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
-    
+
     const geocoder = new google.maps.Geocoder();
 
-    geocoder.geocode({ 'address': establishmentAddress }, function(establishmentResults, status) {
+    geocoder.geocode({ 'address': establishmentAddress }, function (establishmentResults, status) {
         if (status === 'OK') {
             const origin = establishmentResults[0].geometry.location;
 
-            geocoder.geocode({ 'address': address }, function(userResults, status) {
+            geocoder.geocode({ 'address': address }, function (userResults, status) {
                 if (status === 'OK') {
                     const destination = userResults[0].geometry.location;
 
@@ -615,7 +682,7 @@ function calculateFreight() {
                         destinations: [destination],
                         travelMode: 'DRIVING',
                         unitSystem: google.maps.UnitSystem.METRIC
-                    }, function(response, status) {
+                    }, function (response, status) {
                         if (status === 'OK') {
                             const distance = response.rows[0].elements[0].distance.value / 1000;
                             const freight = calculateFreightValue(distance);
