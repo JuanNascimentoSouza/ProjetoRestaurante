@@ -199,11 +199,20 @@ async function sendOrder() {
     }
 
     try {
-        const address = document.getElementById('address').value;
-        if (!address) {
-            alert("Por favor, insira um endereço válido.");
+        // Captura os valores dos campos de endereço
+        const street = document.getElementById('street').value.trim();
+        const number = document.getElementById('number').value.trim();
+        const complement = document.getElementById('complement').value.trim();
+        const cep = document.getElementById('cep').value.trim();
+
+        // Validação para garantir que campos essenciais foram preenchidos
+        if (!street || !number || !cep) {
+            alert("Por favor, insira a Rua, Número e CEP para enviar o pedido.");
             return;
         }
+
+        // Monta o endereço completo
+        const address = `${street}, ${number}${complement ? ', ' + complement : ''}, ${cep}`;
 
         const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
 
@@ -245,57 +254,6 @@ async function geocodeAddress(address) {
                 reject(new Error('Erro ao geocodificar o endereço: ' + status));
             }
         });
-    });
-}
-
-function calculateFreight() {
-    const address = document.getElementById('address').value;
-    const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
-
-    const geocoder = new google.maps.Geocoder();
-
-    // Geocode do endereço do estabelecimento
-    geocoder.geocode({ 'address': establishmentAddress }, function (establishmentResults, status) {
-        if (status === 'OK') {
-            const origin = establishmentResults[0].geometry.location;
-
-            // Geocode do endereço do usuário
-            geocoder.geocode({ 'address': address }, function (userResults, status) {
-                if (status === 'OK') {
-                    const destination = userResults[0].geometry.location;
-
-                    const service = new google.maps.DistanceMatrixService();
-                    service.getDistanceMatrix({
-                        origins: [origin],
-                        destinations: [destination],
-                        travelMode: 'DRIVING',
-                        unitSystem: google.maps.UnitSystem.METRIC
-                    }, function (response, status) {
-                        if (status === 'OK') {
-                            const distance = response.rows[0].elements[0].distance.value / 1000;
-                            const freight = calculateFreightValue(distance);
-                            document.getElementById('result').innerText = `Distância: ${distance.toFixed(2)} km\nFrete: R$ ${freight.toFixed(2)}`;
-                            console.log(`Distância: ${distance.toFixed(2)} km, Frete: R$ ${freight.toFixed(2)}`);
-
-                            // Habilitar o botão de enviar pedido
-                            const sendOrderButton = document.getElementById('sendOrderButton');
-                            sendOrderButton.disabled = false;
-                            isFreightCalculated = true; // Atualizar o estado do frete
-
-                        } else {
-                            console.error('Erro ao calcular a distância:', status);
-                            alert('Erro ao calcular a distância: ' + status);
-                        }
-                    });
-                } else {
-                    console.error('Erro ao geocodificar o endereço do cliente:', status);
-                    alert('Erro ao geocodificar o endereço do cliente: ' + status);
-                }
-            });
-        } else {
-            console.error('Erro ao geocodificar o endereço do estabelecimento:', status);
-            alert('Erro ao geocodificar o endereço do estabelecimento: ' + status);
-        }
     });
 }
 
@@ -663,7 +621,33 @@ function preloadImagens() {
 }
 
 function calculateFreight() {
-    const address = document.getElementById('address').value;
+    
+    const street = document.getElementById('street').value.trim();
+
+    const number = document.getElementById('number').value.trim();
+
+    const complement = document.getElementById('complement').value.trim();
+
+    const cep = document.getElementById('cep').value.trim();
+
+
+
+    // Validação para evitar que o cálculo aconteça sem informações essenciais
+
+    if (!street || !number || !cep) {
+
+        alert('Por favor, insira a Rua, Número e CEP para calcular o frete.');
+
+        return;
+
+    }
+
+
+
+    // Monta o endereço mais completo possível
+
+    const address = `${street}, ${number} ${complement ? ', ' + complement : ''}, ${cep}`;
+    
     const establishmentAddress = 'Estr. de Itaitindiba, 360 - Santa Izabel, São Gonçalo - RJ, 24738-795';
 
     const geocoder = new google.maps.Geocoder();

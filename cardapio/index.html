@@ -466,11 +466,23 @@
             <p id="cartTotal">Total: R$ 0,00</p>
             <div class="frete">
                 <h1>Calculador de Frete</h1>
-                <label for="address">Digite seu endereço completo:</label>
-                <input type="text" id="address" placeholder="Rua, número, cidade, estado, CEP">
-                <button id="calculateFreightButton">Calcular Frete</button>
+
+
+                <label for="street">Rua:</label>
+                <input type="text" id="street" placeholder="Nome da Rua">
+                
+                <label for="cep">CEP:</label>
+                <input type="text" id="cep" placeholder="Digite o CEP">
+                
+                <label for="number">Número:</label>
+                <input type="text" id="number" placeholder="Número da residência">
+                
+                <label for="complement">Complemento:</label>
+                <input type="text" id="complement" placeholder="Apartamento, bloco, etc.">
+                
+                <button id="calculateFreightButton" onclick="calculateFreight()">Calcular Frete</button>
+
                 <div id="result"></div>
-            </div>
         </div>
     </div>
 
