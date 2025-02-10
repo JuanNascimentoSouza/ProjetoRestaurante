@@ -349,13 +349,15 @@ a:hover {
 }
 
 .cart-popup {
-    display: none; /* Mantém oculto até ser ativado */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
     z-index: 1000;
 }
 
@@ -406,34 +408,41 @@ a:hover {
 
 
 .cart-popup-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #ffffff;
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    overflow-y: auto; /* Rola apenas o conteúdo interno */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    min-height: 200px; /* Altura mínima */
+    max-height: 90vh; /* Altura máxima */
+    transition: height 0.3s ease; /* Animação suave */
 }
 
 #cartItems {
-    list-style-type: none;
-    padding: 1px;
-    
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    max-height: 300px; /* Altura máxima antes de rolar */
+    overflow-y: auto; /* Rola os produtos */
 }
 
 #cartItems li {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
     white-space: normal;       /* Permite que o texto quebre automaticamente */
     word-wrap: break-word;     /* Quebra palavras muito longas se necessário */
     overflow-wrap: break-word; /* Propriedade equivalente (suporte mais moderno) */
+    flex-direction: column;
+}
+
+#cartItems li:last-child {
+    border-bottom: none;
 }
 
 #cartItems li span {
@@ -717,8 +726,8 @@ li:hover {
 
 .close {
     position: absolute;
-    right: 10px;
     top: 10px;
+    right: 15px;
     font-size: 24px;
     cursor: pointer;
 }
@@ -729,7 +738,18 @@ li:hover {
 
 }
 
-
+.cart-popup {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escurecido */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+}
 
 #closeCartPopup {
     display: inline-block;
@@ -972,29 +992,34 @@ li:hover {
 }
 
 .frete {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-
-.frete h1 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 24px;
+    margin-top: 20px;
 }
 
 .frete label {
     display: block;
-    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.frete input {
+    width: 100%;
+    padding: 8px;
     margin-bottom: 10px;
-    color: #666;
-    font-size: 16px;
-    text-align: left;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.frete button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.frete button:hover {
+    background-color: #0056b3;
 }
 
 .frete input[type="text"] {

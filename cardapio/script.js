@@ -94,7 +94,7 @@ document.getElementById('closeCartPopup').addEventListener('click', closeModal);
 
 function openCartPopup() {
     const cartPopup = document.getElementById('cartPopup');
-    cartPopup.style.display = 'block';
+    cartPopup.style.display = 'flex';
     updateCart();
 
     // Verificar se o frete já foi calculado e habilitar o botão, se necessário
@@ -698,5 +698,25 @@ function calculateFreightValue(distance) {
     const ratePerKm = 2;
     return fixedRate + (ratePerKm * distance);
 }
+
+// Função para mostrar o popup
+function showCartPopup() {
+    document.getElementById('cartPopup').style.display = 'flex';
+}
+
+// Função para ocultar o popup
+function hideCartPopup() {
+    document.getElementById('cartPopup').style.display = 'none';
+}
+
+// Evento para fechar o popup ao clicar no botão de fechar
+document.getElementById('closeCartPopup').addEventListener('click', hideCartPopup);
+
+// Evento para fechar o popup ao clicar fora do conteúdo
+document.getElementById('cartPopup').addEventListener('click', function(event) {
+    if (event.target === this) {
+        hideCartPopup();
+    }
+});
 
 preloadImagens();
